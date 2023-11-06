@@ -6,6 +6,7 @@ import { envConfigBuilder } from './infraestructure/env-config-builder';
   imports: [
     ConfigModule.forRoot({
       load: [envConfigBuilder],
+      isGlobal: true,
     }),
   ],
 })
