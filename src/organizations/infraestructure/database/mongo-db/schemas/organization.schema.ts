@@ -14,7 +14,7 @@ export class Organization extends Document implements OrganizationEntity {
   address: AddressEntity;
   @Prop({ unique: true, index: true })
   email: string;
-  @Prop({ type: Types.ObjectId, ref: 'User', unique: true, index: true })
+  @Prop({ type: Types.ObjectId, ref: 'Users', unique: true, index: true })
   ownerId: Types.ObjectId;
 }
 

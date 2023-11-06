@@ -1,6 +1,6 @@
 import { AddressEntity } from '@shared/domain/entities/address.entity';
 
-export interface OrganizationEntity {
+export class OrganizationEntity {
   _id?: string;
   taxId: string;
   name: string;

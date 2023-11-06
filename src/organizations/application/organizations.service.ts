@@ -4,7 +4,6 @@ import { OrganizationCreatedEvent } from '@shared/domain/events/organization-cre
 import { DataService } from '../domain/abstract/data-service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
-
 @Injectable()
 export class OrganizationsService {
   constructor(

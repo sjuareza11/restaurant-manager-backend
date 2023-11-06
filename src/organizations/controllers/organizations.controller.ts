@@ -11,7 +11,7 @@ import {
 import { AccessTokenGuard } from '@src/shared/infraestructure/guards/access-token.guard';
 import { CreateOrganizationDto } from '../application/dto/create-organization.dto';
 import { UpdateOrganizationDto } from '../application/dto/update-organization.dto';
-import { AccessOrganizationGuard } from '../application/guards/access-update-organization.guard';
+import { OrganizationIsMemberGuard } from '../application/guards/organization-is-member-guard';
 import { OrganizationsService } from '../application/organizations.service';
 
 @Controller('organizations')
@@ -28,13 +28,13 @@ export class OrganizationsController {
     };
     return this.organizationsService.create(createOrganizationDto);
   }
-  @UseGuards(AccessTokenGuard, AccessOrganizationGuard)
+  @UseGuards(AccessTokenGuard, OrganizationIsMemberGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.organizationsService.findOne(id);
   }
 
-  @UseGuards(AccessTokenGuard, AccessOrganizationGuard)
+  @UseGuards(AccessTokenGuard, OrganizationIsMemberGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
