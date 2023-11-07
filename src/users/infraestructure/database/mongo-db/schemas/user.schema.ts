@@ -5,7 +5,7 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class User extends Document implements UserEntity {
-  @Prop({ type: String, default: generateUUID() })
+  @Prop({ type: String, default: () => generateUUID() })
   _id: string;
   @Prop()
   name: string;

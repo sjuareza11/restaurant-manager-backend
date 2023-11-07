@@ -6,6 +6,8 @@ export interface EnviromentConfiguration {
   readonly databases: {
     readonly mongo: MongoDatabaseConfig;
   };
+  readonly paginationDefaultLimit: number;
+  readonly paginationDefaultOffset: number;
   readonly authConfig: JWTConfig;
   readonly port: number;
 }

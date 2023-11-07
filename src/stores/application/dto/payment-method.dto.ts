@@ -1,6 +1,6 @@
 import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
 import { IsBoolean, IsEnum, IsString, IsUUID } from 'class-validator';
-import { PaymentMethodEntity } from './../../domain/entity/payment-method';
+import { PaymentMethodEntity } from '../../domain/entities/payment-method';
 import { PaymentMethodsConfig } from './../../domain/enums/payment-methods-config.enum';
 export class PaymentMethodDto implements PaymentMethodEntity {
   @IsEnum(PaymentMethodsConfig)

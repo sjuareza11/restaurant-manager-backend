@@ -3,7 +3,7 @@ import { generateUUID } from '@shared/domain/utils/uuid';
 import { Document } from 'mongoose';
 @Schema()
 export class ShippingCosts extends Document {
-  @Prop({ type: String, default: generateUUID() })
+  @Prop({ type: String, default: () => generateUUID() })
   _id: string;
   @Prop({ required: true })
   fromPrice: number;

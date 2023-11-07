@@ -14,19 +14,16 @@ export class PaymentMethodsService {
     return this.dataService.paymentMethods.create(createPaymentMethodDto);
   }
   findAllByStoreId(storeId: string) {
-    return this.dataService.paymentMethods.getPaymentMethodsByStoreId(storeId);
+    return this.dataService.paymentMethods.getItemsByStoreId(storeId);
   }
   findOneByStoreId(id: string, storeId: string) {
-    return this.dataService.paymentMethods.getPaymentMethodByStoreId(
-      id,
-      storeId,
-    );
+    return this.dataService.paymentMethods.getItemByStoreId(id, storeId);
   }
 
   update(id: string, updatePaymentMethodDto: PaymentMethodDto) {
     return this.dataService.paymentMethods.update(id, updatePaymentMethodDto);
   }
-  delete(id: string) {
-    return this.dataService.paymentMethods.delete(id);
+  removeByStoreId(id: string, storeId: string) {
+    return this.dataService.paymentMethods.deleteByStoreId(id, storeId);
   }
 }

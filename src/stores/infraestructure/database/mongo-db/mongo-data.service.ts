@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { DataService } from '@src/stores/domain/abstract/data-service';
 import { StorePaymentMethodsRepository } from '@src/stores/domain/abstract/store-payment-methods.repository';
 import { StoreRepository } from '@src/stores/domain/abstract/store.repository';
-import { PaymentMethodEntity } from '@src/stores/domain/entity/payment-method';
+import { PaymentMethodEntity } from '@src/stores/domain/entities/payment-method';
 import { Model } from 'mongoose';
 import { MongoStorePaymentMethodsRepository } from './repositories/mongo-store-payments-methods.repository';
 import { MongoStoreRepository } from './repositories/mongo-store.repository';

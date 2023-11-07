@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { EnvConfigModule } from './config/env-config.module';
 import { MONGO_CONFIG } from './config/infraestructure/env-mongo-config';
+import { CouriersModule } from './couriers/couriers.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { StoresModule } from './stores/stores.module';
 import { UsersModule } from './users/users.module';
@@ -20,6 +21,7 @@ import { UsersModule } from './users/users.module';
     OrganizationsModule,
     StoresModule,
     EventEmitterModule.forRoot(),
+    CouriersModule,
   ],
   controllers: [],
   providers: [],

@@ -11,7 +11,7 @@ export class MongoGenericRepository<T> implements GenericRepository<T> {
     this._populateOnFind = populateOnFind;
   }
 
-  getAll(options: GetAllOptionsDTO): Promise<T[]> {
+  getAll(options?: GetAllOptionsDTO): Promise<T[]> {
     return this._repository.find().populate(this._populateOnFind).exec();
   }
 
