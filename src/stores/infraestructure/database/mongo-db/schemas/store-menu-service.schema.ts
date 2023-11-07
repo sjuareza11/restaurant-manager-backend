@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { generateUUID } from '@src/shared/domain/utils/uuid';
-import { StoreServicesSalesChannel } from '@src/stores/domain/entity/enums/store-services-sales-channel.enum';
 import { StoreMenuServiceEntity } from '@src/stores/domain/entity/store-menu-services.entity';
+import { StoreServicesSalesChannel } from '@src/stores/domain/enums/store-services-sales-channel.enum';
 import { Document } from 'mongoose';
 @Schema()
 export class StoreMenuService
@@ -12,13 +12,10 @@ export class StoreMenuService
   _id: string;
   @Prop({ required: true })
   menuId: string;
-  @Prop({ type: String, enum: StoreServicesSalesChannel })
-  @Prop({ required: true })
+  @Prop({ type: String, enum: StoreServicesSalesChannel, required: true })
   salesChannel: StoreServicesSalesChannel;
-
   @Prop({ required: true })
   minimumOrderAmount: number;
-
   @Prop({ default: true })
   available: boolean;
 }

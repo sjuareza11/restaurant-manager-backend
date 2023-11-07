@@ -1,5 +1,5 @@
 import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
-import { StoreServicesSalesChannel } from '@src/stores/domain/entity/enums/store-services-sales-channel.enum';
+import { StoreServicesSalesChannel } from '@stores/domain/enums/store-services-sales-channel.enum';
 import {
   IsBoolean,
   IsNumber,

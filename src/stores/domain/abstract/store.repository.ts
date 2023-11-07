@@ -14,4 +14,6 @@ export abstract class StoreRepository<T> implements GenericRepository<T> {
   abstract create(item: T): Promise<T>;
 
   abstract update(id: string, item: T);
+
+  abstract delete(id: string);
 }

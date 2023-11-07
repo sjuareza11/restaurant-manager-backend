@@ -1,14 +1,19 @@
 import { GenericRepository } from '@shared/domain/abstract/generic-repository';
 import { GetAllOptionsDTO } from '@shared/domain/dto/get-all-options.dto';
 
-export abstract class OrganizationRepository<T>
+export abstract class StorePaymentMethodsRepository<T>
   implements GenericRepository<T>
 {
   abstract getAll(options: GetAllOptionsDTO): Promise<T[]>;
 
   abstract getById(id: string): Promise<T>;
 
-  abstract getByEmail(email: string): Promise<T>;
+  abstract getPaymentMethodByStoreId(
+    paymentMethodId: string,
+    storeId: string,
+  ): Promise<T>;
+
+  abstract getPaymentMethodsByStoreId(storeId: string): Promise<T>;
 
   abstract create(item: T): Promise<T>;
 
