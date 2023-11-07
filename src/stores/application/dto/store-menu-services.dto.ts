@@ -1,17 +1,18 @@
+import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
 import { StoreServicesSalesChannel } from '@src/stores/domain/entity/enums/store-services-sales-channel.enum';
 import {
   IsBoolean,
-  IsMongoId,
   IsNumber,
   IsOptional,
   IsPositive,
+  IsUUID,
   Validate,
 } from 'class-validator';
 
 export class StoreMenuServiceDto {
-  @IsMongoId()
+  @IsUUID(UUID_VERSION)
   menuId: string;
-  @IsMongoId()
+  @IsUUID(UUID_VERSION)
   storeId: string;
   @Validate((value: StoreServicesSalesChannel) => {
     return Object.values(StoreServicesSalesChannel).includes(value);

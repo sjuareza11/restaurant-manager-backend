@@ -1,12 +1,13 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { AddressDto } from '@src/shared/application/dto/address-dto';
+import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
 import { Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
-  IsMongoId,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   MinLength,
   NotContains,
@@ -27,7 +28,7 @@ export class UpdateStoreDto extends PartialType(CreateStoreDto) {
   @ValidateNested()
   @Type(() => AddressDto)
   address: AddressDto;
-  @IsMongoId()
+  @IsUUID(UUID_VERSION)
   organizationId: string | any;
   @IsOptional()
   @IsArray()

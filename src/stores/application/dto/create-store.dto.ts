@@ -1,11 +1,12 @@
 import { AddressDto } from '@shared/application/dto/address-dto';
+import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
 import { Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
-  IsMongoId,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   MinLength,
   NotContains,
@@ -15,18 +16,6 @@ import { ShippingCostsDto } from './shipping-costs.dto';
 import { StoreMenuServiceDto } from './store-menu-services.dto';
 
 export class CreateStoreDto {
-  // @NotContains(' ')
-  // @IsString()
-  // @Length(3, 20)
-  // code: string;
-  // @IsString()
-  // @Length(3, 50)
-  // name: string;
-  // @ValidateNested()
-  // @Type(() => AddressDto)
-  // address: AddressDto;
-  // @IsMongoId()
-  // organizationId: string | any;
   @NotContains(' ')
   @IsString()
   @Length(3, 20)
@@ -37,7 +26,7 @@ export class CreateStoreDto {
   @ValidateNested()
   @Type(() => AddressDto)
   address: AddressDto;
-  @IsMongoId()
+  @IsUUID(UUID_VERSION)
   organizationId: string | any;
   @IsOptional()
   @IsArray()

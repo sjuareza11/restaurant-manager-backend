@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { generateUUID } from '@shared/domain/utils/uuid';
 import {
   Address,
   AddressSchema,
 } from '@shared/infraestructure/database/mongo-db/schemas/address.schema';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 import { StoreEntity } from '../../../../domain/entity/store.entity';
 import { ShippingCosts, ShippingCostsSchema } from './shipping-costs.schema';
 import {
@@ -13,6 +14,8 @@ import {
 
 @Schema()
 export class Store extends Document implements StoreEntity {
+  @Prop({ type: String, default: generateUUID() })
+  _id: string;
   @Prop({ required: true, unique: true })
   code: string;
   @Prop({ required: true })
@@ -26,7 +29,7 @@ export class Store extends Document implements StoreEntity {
   @Prop({ type: AddressSchema })
   address: Address;
   @Prop({
-    type: Types.ObjectId,
+    type: String,
     ref: 'Organizations',
     unique: true,
     index: true,
