@@ -1,4 +1,4 @@
-export class ShippingCostsEntity {
+export interface ShippingCostsEntity {
   _id?: string;
   fromPrice: number;
   toPrice: number;

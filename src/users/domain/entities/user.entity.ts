@@ -7,5 +7,5 @@ export interface UserEntity {
   email: string;
   refreshToken?: string;
   organizationId?: string | any;
-  storeId?: string;
+  storeId?: string | any;
 }

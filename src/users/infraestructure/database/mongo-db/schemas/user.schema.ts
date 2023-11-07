@@ -24,6 +24,8 @@ export class User extends Document implements UserEntity {
   refreshToken: string;
   @Prop({ type: String, ref: 'Organization' })
   organizationId: string;
+  @Prop({ type: String, ref: 'Stores' })
+  storeId: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

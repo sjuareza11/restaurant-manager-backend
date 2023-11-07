@@ -29,4 +29,7 @@ export class MongoGenericRepository<T> implements GenericRepository<T> {
   update(id: string, item: T) {
     return this._repository.findByIdAndUpdate(id, item, { new: true });
   }
+  delete(id: string) {
+    return this._repository.findByIdAndDelete(id);
+  }
 }

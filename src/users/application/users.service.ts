@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { OnEvent } from '@nestjs/event-emitter';
 import { DataService } from '@users/domain/abstract/data-service';
-import { OrganizationCreatedEvent } from './../../shared/domain/events/organization-created.event';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -9,12 +7,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersService {
   constructor(private dataService: DataService) {}
 
-  @OnEvent('new.organization')
-  async notifyUser(payload: OrganizationCreatedEvent) {
-    const user = await this.update(payload.userId, {
-      organizationId: payload.organizationId,
-    });
-  }
   create(createUserDto: CreateUserDto) {
     return this.dataService.users.create(createUserDto);
   }

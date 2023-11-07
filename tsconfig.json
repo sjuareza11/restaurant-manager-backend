@@ -23,7 +23,8 @@
       "@config/*": ["src/config/*"],
       "@users/*": ["src/users/*"],
       "@shared/*": ["src/shared/*"],
-      "@organizations/*": ["src/organizations/*"]
+      "@organizations/*": ["src/organizations/*"],
+      "@stores/*": ["src/stores/*"]
     }
   }
 }
