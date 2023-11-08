@@ -10,7 +10,6 @@ export const MaxFileSize = (
 ) => {
   // eslint-disable-next-line @typescript-eslint/ban-types
   return (object: Object, propertyName: string) => {
-    console.log('1', object);
     registerDecorator({
       name: 'MaxFileSize',
       target: object.constructor,

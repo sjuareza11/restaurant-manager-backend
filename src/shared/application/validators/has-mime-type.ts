@@ -10,8 +10,6 @@ export const HasMimeType = (
 ) => {
   // eslint-disable-next-line @typescript-eslint/ban-types
   return (object: Object, propertyName: string) => {
-    console.log('oshd', object);
-
     registerDecorator({
       name: 'HasMimeType',
       target: object.constructor,
@@ -23,7 +21,6 @@ export const HasMimeType = (
       },
       validator: {
         validate(value: any, args: ValidationArguments) {
-          console.log('sd', value);
           // Implement your mime type validation logic here
           // For example, you might check that mimeTypes includes value.type
           return args.constraints.includes(value.mimetype);

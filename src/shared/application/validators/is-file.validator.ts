@@ -6,17 +6,29 @@ import {
 
 export const IsFile = (validationOptions?: ValidationOptions) => {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  return () => (object: Object, propertyName: string) => {
+  return (object: Object, propertyName: string) => {
     registerDecorator({
       name: 'IsFile',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
+      constraints: [],
       validator: {
-        validate(value: any, args: ValidationArguments) {
-          // Implement your file validation logic here
-          // For example, you might check that value is an instance of File
-          return value instanceof File;
+        validate: (value: any, args: ValidationArguments) => {
+          return (
+            value &&
+            typeof value.name === 'string' &&
+            value.data instanceof Buffer &&
+            typeof value.size === 'number' &&
+            typeof value.encoding === 'string' &&
+            typeof value.tempFilePath === 'string' &&
+            typeof value.truncated === 'boolean' &&
+            typeof value.mimetype === 'string' &&
+            typeof value.md5 === 'string'
+          );
+        },
+        defaultMessage: (args: ValidationArguments) => {
+          return 'File is not valid';
         },
       },
     });

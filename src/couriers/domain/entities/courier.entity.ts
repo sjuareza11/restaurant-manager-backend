@@ -8,4 +8,8 @@ export class CourierEntity {
   available?: boolean;
   imageUrl?: string;
   storeId: string;
+
+  constructor(partial: Partial<CourierEntity>) {
+    Object.assign(this, partial);
+  }
 }

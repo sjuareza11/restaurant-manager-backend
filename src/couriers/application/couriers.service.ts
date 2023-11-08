@@ -1,14 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { UploaderService } from '@src/shared/domain/abstract/uplodader-service';
+import { FileDto } from '@src/shared/domain/dto/file.dto';
 import { DataService } from '../domain/abstract/data-service';
 import { CreateCourierDto } from './dto/create-courier.dto';
 import { UpdateCourierDto } from './dto/update-courier.dto';
 
 @Injectable()
 export class CouriersService {
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private uploaderService: UploaderService,
+  ) {}
 
-  create(createCourierDto: CreateCourierDto) {
-    return this.dataService.couriers.create(createCourierDto);
+  async create(createCourierDto: CreateCourierDto) {
+    const courier = await this.dataService.couriers.create({
+      ...createCourierDto.toEntity(),
+    });
+    if (courier && createCourierDto.imageFile) {
+      await this.uploaderService.uploadFile(
+        new FileDto({
+          ...createCourierDto.imageFile,
+          fullPath: courier.imageUrl,
+        }),
+      );
+      return courier;
+    }
   }
 
   findAllByStoreId(storeId: string) {
@@ -19,8 +35,20 @@ export class CouriersService {
     return this.dataService.couriers.getItemByStoreId(id, storeId);
   }
 
-  update(id: string, updateCourierDto: UpdateCourierDto) {
-    return this.dataService.couriers.update(id, updateCourierDto);
+  async update(id: string, updateCourierDto: UpdateCourierDto) {
+    const courier = await this.dataService.couriers.update(
+      id,
+      updateCourierDto,
+    );
+    if (courier && updateCourierDto.imageFile) {
+      return await this.uploaderService.uploadFile(
+        new FileDto({
+          ...updateCourierDto.imageFile,
+          fullPath: courier.imageUrl,
+        }),
+      );
+    }
+    return courier;
   }
 
   removeByStoreId(id: string, storeId: string) {
