@@ -23,7 +23,6 @@ export class AddFilesToBodyInterceptor implements NestInterceptor {
   setBodyFiles(req: Request) {
     if (!Array.isArray((req as any).files)) {
       (req as any).body = { ...req.body, ...((req as any).files as any) };
-      // console.log((req as any).body);
     } else {
       (req as any).files = Array.isArray((req as any).files)
         ? (req as any).files

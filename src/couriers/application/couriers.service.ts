@@ -1,14 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { UploaderService } from '@src/shared/domain/abstract/uplodader-service';
 import { DataService } from '../domain/abstract/data-service';
 import { CreateCourierDto } from './dto/create-courier.dto';
 import { UpdateCourierDto } from './dto/update-courier.dto';
 
 @Injectable()
 export class CouriersService {
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private uploaderService: UploaderService,
+  ) {}
 
   create(createCourierDto: CreateCourierDto) {
-    return this.dataService.couriers.create(createCourierDto);
+    return this.uploaderService.uploadFile(createCourierDto.imageFile);
+    // return this.dataService.couriers.create(createCourierDto);
   }
 
   findAllByStoreId(storeId: string) {

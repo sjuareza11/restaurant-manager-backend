@@ -22,7 +22,8 @@ import { UpdateCourierDto } from '../application/dto/update-courier.dto';
 export class CouriersController {
   constructor(private readonly couriersService: CouriersService) {}
 
-  @UseInterceptors(AddFilesToBodyInterceptor)
+  @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
+  @UseInterceptors(AddFilesToBodyInterceptor, AddStoreIdInterceptor)
   @Post()
   create(@Body() createCourierDto: CreateCourierDto) {
     return this.couriersService.create(createCourierDto);

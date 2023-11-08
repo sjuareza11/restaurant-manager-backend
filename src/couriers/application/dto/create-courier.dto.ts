@@ -1,17 +1,21 @@
 import { HasMimeType } from '@src/shared/application/validators/has-mime-type';
+import { IsDNIOrCIF } from '@src/shared/application/validators/is-dni-or-cif';
 import { MaxFileSize } from '@src/shared/application/validators/max-file-size.validator';
+import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
+import { FileUtils } from '@src/shared/utils/file.utils';
 import {
   IsBoolean,
   IsEmail,
   IsMobilePhone,
   IsOptional,
   IsString,
+  IsUUID,
   MinLength,
 } from 'class-validator';
 
 export class CreateCourierDto {
   @IsString()
-  @MinLength(9)
+  @IsDNIOrCIF()
   personalId: string;
   @IsString()
   @MinLength(1)
@@ -28,12 +32,12 @@ export class CreateCourierDto {
   @IsOptional()
   @IsBoolean()
   available?: boolean;
-  @MaxFileSize(1e6)
+  @MaxFileSize(FileUtils.convertMBytesToBytes(20))
   @HasMimeType(['image/jpeg', 'image/png'])
   imageFile: any;
   @IsOptional()
   @IsString()
   imageUrl?: string;
-  // @IsUUID(UUID_VERSION)
-  // storeId: string;
+  @IsUUID(UUID_VERSION)
+  storeId: string;
 }

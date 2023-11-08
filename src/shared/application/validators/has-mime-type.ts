@@ -10,8 +10,6 @@ export const HasMimeType = (
 ) => {
   // eslint-disable-next-line @typescript-eslint/ban-types
   return (object: Object, propertyName: string) => {
-    console.log('oshd', object);
-
     registerDecorator({
       name: 'HasMimeType',
       target: object.constructor,

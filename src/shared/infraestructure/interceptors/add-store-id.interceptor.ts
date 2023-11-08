@@ -9,7 +9,6 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class AddStoreIdInterceptor implements NestInterceptor {
@@ -19,6 +18,6 @@ export class AddStoreIdInterceptor implements NestInterceptor {
     if (storeId) {
       (request.body as any).storeId = storeId;
     }
-    return next.handle().pipe(tap(() => console.log(`After...`)));
+    return next.handle();
   }
 }
