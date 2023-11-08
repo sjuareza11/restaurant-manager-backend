@@ -1,7 +1,3 @@
-import {
-  PAGINATION_DEFAULT_LIMIT,
-  PAGINATION_DEFAULT_OFFSET,
-} from '@src/config/infraestructure/env-pagination-config';
 import { StoreItemsGenericRepository } from '@src/shared/domain/abstract/store-items-generic.repository';
 import { Model } from 'mongoose';
 import { GetAllOptionsDTO } from '../../../../domain/dto/get-all-options.dto';
@@ -19,8 +15,16 @@ export class MongoStoreItemsGenericRepository<T>
   getItemsByStoreId(storeId: string, options: GetAllOptionsDTO): Promise<T[]> {
     return this._repository
       .find({ storeId })
-      .limit(options?.pagination?.limit || PAGINATION_DEFAULT_LIMIT)
-      .skip(options?.pagination?.offset || PAGINATION_DEFAULT_OFFSET);
+      .limit(
+        options?.pagination?.limit ||
+          parseInt(process.env.PAGINATION_DEFAULT_LIMIT) ||
+          10,
+      )
+      .skip(
+        options?.pagination?.offset ||
+          parseInt(process.env.PAGINATION_DEFAULT_OFFSET) ||
+          0,
+      );
   }
   getItemByStoreId(itemId: string, storeId: string): Promise<T> {
     return this._repository.findById({
@@ -35,8 +39,16 @@ export class MongoStoreItemsGenericRepository<T>
   getAll(options?: GetAllOptionsDTO): Promise<T[]> {
     return this._repository
       .find()
-      .limit(options?.pagination?.limit || PAGINATION_DEFAULT_LIMIT)
-      .skip(options?.pagination?.offset || PAGINATION_DEFAULT_OFFSET);
+      .limit(
+        options?.pagination?.limit ||
+          parseInt(process.env.PAGINATION_DEFAULT_LIMIT) ||
+          10,
+      )
+      .skip(
+        options?.pagination?.offset ||
+          parseInt(process.env.PAGINATION_DEFAULT_OFFSET) ||
+          0,
+      );
   }
 
   getById(id: any): Promise<T> {
