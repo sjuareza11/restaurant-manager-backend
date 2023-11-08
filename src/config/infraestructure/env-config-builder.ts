@@ -1,5 +1,6 @@
 import { EnviromentConfiguration } from '../domain/environment-configuration';
 import { envAuthConfig } from './env-auth-config';
+import { envAWSConfig } from './env-aws-config';
 import { envMongoConfig } from './env-mongo-config';
 
 export const envConfigBuilder: () => EnviromentConfiguration = () => ({
@@ -11,4 +12,5 @@ export const envConfigBuilder: () => EnviromentConfiguration = () => ({
   port: parseInt(process.env.PORT) || 3000,
   paginationDefaultLimit: parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10,
   paginationDefaultOffset: parseInt(process.env.PAGINATION_DEFAULT_OFFSET) || 0,
+  awsConfig: envAWSConfig(),
 });

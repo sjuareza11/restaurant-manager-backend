@@ -21,7 +21,10 @@ export class Courier extends Document implements CourierEntity {
   available?: boolean;
   @Prop()
   imageUrl?: string;
-  @Prop({ type: String, default: () => generateUUID() })
+  @Prop({
+    type: String,
+    ref: 'Stores',
+  })
   storeId: string;
 }
 
