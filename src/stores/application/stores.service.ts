@@ -14,10 +14,7 @@ export class StoresService {
 
   async create(createStoreDto: CreateStoreDto, ownerId: string) {
     const store = await this.dataService.stores.create(createStoreDto);
-    this.eventEmitter.emit(
-      'new.store',
-      new StoreCreatedEvent(store._id.toString(), ownerId),
-    );
+    this.eventEmitter.emit('new.store', new StoreCreatedEvent(store._id.toString(), ownerId));
     return store;
   }
 
@@ -25,14 +22,10 @@ export class StoresService {
     return this.dataService.stores.getStoreByOrganizationId(id, organizationId);
   }
 
-  updateStoreByOrganizationId(id: string, updateStoreDto: UpdateStoreDto) {
-    if (
-      this.dataService.stores.getStoreByOrganizationId(
-        id,
-        updateStoreDto.organizationId,
-      )
-    ) {
-      return this.dataService.stores.update(id, updateStoreDto);
+  async updateStoreByOrganizationId(id: string, updateStoreDto: UpdateStoreDto) {
+    if (this.dataService.stores.getStoreByOrganizationId(id, updateStoreDto.organizationId)) {
+      const store = await this.dataService.stores.update(id, updateStoreDto);
+      return store;
     }
   }
 }

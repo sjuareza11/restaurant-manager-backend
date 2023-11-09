@@ -3,8 +3,6 @@ import { MenuEntity } from '@src/menus/domain/entities/menu.entity';
 import { generateUUID } from '@src/shared/domain/utils/uuid';
 import { Document } from 'mongoose';
 
-export type MenuDocument = Menu & Document;
-
 @Schema()
 export class Menu extends Document implements MenuEntity {
   @Prop({ type: String, default: () => generateUUID() })
