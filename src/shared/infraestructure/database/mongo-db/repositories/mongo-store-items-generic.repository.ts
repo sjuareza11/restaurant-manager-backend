@@ -2,9 +2,7 @@ import { StoreItemsGenericRepository } from '@src/shared/domain/abstract/store-i
 import { Model } from 'mongoose';
 import { GetAllOptionsDTO } from '../../../../domain/dto/get-all-options.dto';
 
-export class MongoStoreItemsGenericRepository<T>
-  implements StoreItemsGenericRepository<T>
-{
+export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRepository<T> {
   protected _repository: Model<T>;
   protected _populateOnFind: string[];
 
@@ -15,16 +13,8 @@ export class MongoStoreItemsGenericRepository<T>
   getItemsByStoreId(storeId: string, options: GetAllOptionsDTO): Promise<T[]> {
     return this._repository
       .find({ storeId })
-      .limit(
-        options?.pagination?.limit ||
-          parseInt(process.env.PAGINATION_DEFAULT_LIMIT) ||
-          10,
-      )
-      .skip(
-        options?.pagination?.offset ||
-          parseInt(process.env.PAGINATION_DEFAULT_OFFSET) ||
-          0,
-      );
+      .limit(options?.pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10)
+      .skip(options?.pagination?.offset || parseInt(process.env.PAGINATION_DEFAULT_OFFSET) || 0);
   }
   getItemByStoreId(itemId: string, storeId: string): Promise<T> {
     return this._repository.findById({
@@ -39,23 +29,12 @@ export class MongoStoreItemsGenericRepository<T>
   getAll(options?: GetAllOptionsDTO): Promise<T[]> {
     return this._repository
       .find()
-      .limit(
-        options?.pagination?.limit ||
-          parseInt(process.env.PAGINATION_DEFAULT_LIMIT) ||
-          10,
-      )
-      .skip(
-        options?.pagination?.offset ||
-          parseInt(process.env.PAGINATION_DEFAULT_OFFSET) ||
-          0,
-      );
+      .limit(options?.pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10)
+      .skip(options?.pagination?.offset || parseInt(process.env.PAGINATION_DEFAULT_OFFSET) || 0);
   }
 
   getById(id: any): Promise<T> {
-    return this._repository
-      .findById(id)
-      .populate(this._populateOnFind)
-      .exec() as Promise<T>;
+    return this._repository.findById(id).populate(this._populateOnFind).exec() as Promise<T>;
   }
 
   create(item: T): Promise<T> {
