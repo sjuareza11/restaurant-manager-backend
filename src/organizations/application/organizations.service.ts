@@ -12,15 +12,10 @@ export class OrganizationsService {
   ) {}
 
   async create(createOrganizationDto: CreateOrganizationDto) {
-    const organization = await this.dataService.organizations.create(
-      createOrganizationDto,
-    );
+    const organization = await this.dataService.organizations.create(createOrganizationDto);
     this.eventEmitter.emit(
       'new.organization',
-      new OrganizationCreatedEvent(
-        organization._id,
-        createOrganizationDto.ownerId,
-      ),
+      new OrganizationCreatedEvent(organization._id, createOrganizationDto.ownerId),
     );
     return organization;
   }

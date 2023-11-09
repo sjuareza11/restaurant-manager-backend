@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Req,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AccessTokenGuard } from '@src/shared/infraestructure/guards/access-token.guard';
 import { PaymentMethodDto } from '../application/dto/payment-method.dto';
 import { PaymentMethodsService } from '../application/payment-methods.service';
@@ -45,10 +34,7 @@ export class PaymentMethodsController {
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @UseInterceptors(AddStoreIdInterceptor)
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updatePaymentMethod: PaymentMethodDto,
-  ) {
+  update(@Param('id') id: string, @Body() updatePaymentMethod: PaymentMethodDto) {
     return this.paymentMethodsService.update(id, updatePaymentMethod);
   }
 

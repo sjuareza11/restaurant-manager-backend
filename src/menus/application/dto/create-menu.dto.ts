@@ -1,13 +1,5 @@
 import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
-import {
-  IsBoolean,
-  IsOptional,
-  IsString,
-  IsUUID,
-  Length,
-  MinLength,
-  NotContains,
-} from 'class-validator';
+import { IsBoolean, IsOptional, IsString, IsUUID, Length, MinLength, NotContains } from 'class-validator';
 
 export class CreateMenuDto {
   @IsOptional()

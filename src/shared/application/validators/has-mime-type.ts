@@ -1,13 +1,6 @@
-import {
-  ValidationArguments,
-  ValidationOptions,
-  registerDecorator,
-} from 'class-validator';
+import { ValidationArguments, ValidationOptions, registerDecorator } from 'class-validator';
 
-export const HasMimeType = (
-  mimeTypes: string[],
-  validationOptions?: ValidationOptions,
-) => {
+export const HasMimeType = (mimeTypes: string[], validationOptions?: ValidationOptions) => {
   // eslint-disable-next-line @typescript-eslint/ban-types
   return (object: Object, propertyName: string) => {
     registerDecorator({

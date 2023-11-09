@@ -6,10 +6,7 @@ export abstract class StoreRepository<T> implements GenericRepository<T> {
 
   abstract getById(id: string): Promise<T>;
 
-  abstract getStoreByOrganizationId(
-    storeId: string,
-    organizationId: string,
-  ): Promise<T>;
+  abstract getStoreByOrganizationId(storeId: string, organizationId: string): Promise<T>;
 
   abstract create(item: T): Promise<T>;
 

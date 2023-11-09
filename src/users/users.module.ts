@@ -4,16 +4,11 @@ import { UserEventsHandlerService } from './application/user-events-handler/user
 import { UsersService } from './application/users.service';
 import { DataService } from './domain/abstract/data-service';
 import { MongoDataService } from './infraestructure/database/mongo-db/mongo-data.service';
-import {
-  User,
-  UserSchema,
-} from './infraestructure/database/mongo-db/schemas/user.schema';
+import { User, UserSchema } from './infraestructure/database/mongo-db/schemas/user.schema';
 import { UsersController } from './users.controller';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
   exports: [UsersService],
   controllers: [UsersController],
   providers: [

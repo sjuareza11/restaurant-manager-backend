@@ -6,15 +6,7 @@ import { MaxFileSize } from '@src/shared/application/validators/max-file-size.va
 import { UploadFile } from '@src/shared/domain/models/upload-file';
 import { UUID_VERSION, generateUUID } from '@src/shared/domain/utils/uuid';
 import { FileUtils } from '@src/shared/utils/file.utils';
-import {
-  IsBoolean,
-  IsEmail,
-  IsMobilePhone,
-  IsOptional,
-  IsString,
-  IsUUID,
-  MinLength,
-} from 'class-validator';
+import { IsBoolean, IsEmail, IsMobilePhone, IsOptional, IsString, IsUUID, MinLength } from 'class-validator';
 import { CourierUrlFileCreator } from '../utils/url-file-creator.ts';
 
 export class CreateCourierDto {

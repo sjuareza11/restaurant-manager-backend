@@ -1,10 +1,6 @@
 import { EnviromentConfiguration } from '@config/domain/environment-configuration';
 import { JWTConfig } from '@config/domain/jwt-config';
-import {
-  BadRequestException,
-  ForbiddenException,
-  Injectable,
-} from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { CryptoService } from '@src/shared/domain/abstract/crypto-service';
@@ -50,10 +46,7 @@ export class AuthService {
     // Check if user exists
     const user = await this.usersService.findByEmail(data.email);
     if (!user) throw new BadRequestException('IncorrectCredentials');
-    const passwordMatches = await this.cryptoService.compare(
-      data.password,
-      user.password,
-    );
+    const passwordMatches = await this.cryptoService.compare(data.password, user.password);
     if (!passwordMatches) throw new BadRequestException('IncorrectCredentials');
     const tokens = await this.getTokens({
       userId: user._id,
@@ -109,12 +102,8 @@ export class AuthService {
 
   async refreshTokens(userId: string, refreshToken: string) {
     const user = await this.usersService.findById(userId);
-    if (!user || !user.refreshToken)
-      throw new ForbiddenException('AccessDenied');
-    const refreshTokenMatches = await this.cryptoService.compare(
-      refreshToken,
-      user.refreshToken,
-    );
+    if (!user || !user.refreshToken) throw new ForbiddenException('AccessDenied');
+    const refreshTokenMatches = await this.cryptoService.compare(refreshToken, user.refreshToken);
     if (!refreshTokenMatches) throw new ForbiddenException('AccessDenied');
     const tokens = await this.getTokens({
       userId: user._id,

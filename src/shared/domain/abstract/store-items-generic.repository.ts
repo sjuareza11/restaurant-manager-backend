@@ -7,10 +7,7 @@ export abstract class StoreItemsGenericRepository<T> {
 
   abstract getItemByStoreId(itemId: string, storeId: string): Promise<T>;
 
-  abstract getItemsByStoreId(
-    storeId: string,
-    options?: GetAllOptionsDTO,
-  ): Promise<T[]>;
+  abstract getItemsByStoreId(storeId: string, options?: GetAllOptionsDTO): Promise<T[]>;
 
   abstract deleteByStoreId(itemId: string, storeId: string);
 

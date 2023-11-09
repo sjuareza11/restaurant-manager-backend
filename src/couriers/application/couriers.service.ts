@@ -36,10 +36,7 @@ export class CouriersService {
   }
 
   async update(id: string, updateCourierDto: UpdateCourierDto) {
-    const courier = await this.dataService.couriers.update(
-      id,
-      updateCourierDto,
-    );
+    const courier = await this.dataService.couriers.update(id, updateCourierDto);
     if (courier && updateCourierDto.imageFile) {
       return await this.uploaderService.uploadFile(
         new FileDto({

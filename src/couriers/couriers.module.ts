@@ -7,16 +7,10 @@ import { CouriersService } from './application/couriers.service';
 import { CouriersController } from './controllers/couriers.controller';
 import { DataService } from './domain/abstract/data-service';
 import { MongoDataService } from './infraestructure/database/mongo-db/mongo-data.service';
-import {
-  Courier,
-  CourierSchema,
-} from './infraestructure/database/mongo-db/schemas/courier.schema';
+import { Courier, CourierSchema } from './infraestructure/database/mongo-db/schemas/courier.schema';
 
 @Module({
-  imports: [
-    ConfigModule,
-    MongooseModule.forFeature([{ name: Courier.name, schema: CourierSchema }]),
-  ],
+  imports: [ConfigModule, MongooseModule.forFeature([{ name: Courier.name, schema: CourierSchema }])],
   controllers: [CouriersController],
   providers: [
     CouriersService,

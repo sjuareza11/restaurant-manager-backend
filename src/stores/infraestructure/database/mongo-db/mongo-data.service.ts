@@ -24,8 +24,6 @@ export class MongoDataService implements DataService {
 
   onApplicationBootstrap() {
     this.stores = new MongoStoreRepository<Store>(this.StoreRepository);
-    this.paymentMethods = new MongoStorePaymentMethodsRepository<PaymentMethod>(
-      this.PaymentMethodRepository,
-    );
+    this.paymentMethods = new MongoStorePaymentMethodsRepository<PaymentMethod>(this.PaymentMethodRepository);
   }
 }

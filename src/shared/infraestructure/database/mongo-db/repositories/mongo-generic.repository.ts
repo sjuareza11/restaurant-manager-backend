@@ -16,10 +16,7 @@ export class MongoGenericRepository<T> implements GenericRepository<T> {
   }
 
   getById(id: any): Promise<T> {
-    return this._repository
-      .findById(id)
-      .populate(this._populateOnFind)
-      .exec() as Promise<T>;
+    return this._repository.findById(id).populate(this._populateOnFind).exec() as Promise<T>;
   }
 
   create(item: T): Promise<T> {

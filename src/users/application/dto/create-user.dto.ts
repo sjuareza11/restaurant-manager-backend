@@ -1,13 +1,5 @@
 import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
-import {
-  IsEmail,
-  IsMobilePhone,
-  IsOptional,
-  IsString,
-  IsStrongPassword,
-  IsUUID,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsMobilePhone, IsOptional, IsString, IsStrongPassword, IsUUID, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   id: string;

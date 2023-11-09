@@ -1,16 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { generateUUID } from '@shared/domain/utils/uuid';
-import {
-  Address,
-  AddressSchema,
-} from '@shared/infraestructure/database/mongo-db/schemas/address.schema';
+import { Address, AddressSchema } from '@shared/infraestructure/database/mongo-db/schemas/address.schema';
 import { Document } from 'mongoose';
 import { StoreEntity } from '../../../../domain/entities/store.entity';
 import { ShippingCosts, ShippingCostsSchema } from './shipping-costs.schema';
-import {
-  StoreMenuService,
-  StoreMenuServiceSchema,
-} from './store-menu-service.schema';
+import { StoreMenuService, StoreMenuServiceSchema } from './store-menu-service.schema';
 
 @Schema()
 export class Store extends Document implements StoreEntity {

@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { AccessTokenGuard } from '@src/shared/infraestructure/guards/access-token.guard';
 import { CreateOrganizationDto } from '../application/dto/create-organization.dto';
 import { UpdateOrganizationDto } from '../application/dto/update-organization.dto';
@@ -36,10 +27,7 @@ export class OrganizationsController {
 
   @UseGuards(AccessTokenGuard, OrganizationIsMemberGuard)
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateOrganizationDto: UpdateOrganizationDto,
-  ) {
+  update(@Param('id') id: string, @Body() updateOrganizationDto: UpdateOrganizationDto) {
     return this.organizationsService.update(id, updateOrganizationDto);
   }
 }

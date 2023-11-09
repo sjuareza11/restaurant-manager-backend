@@ -1,9 +1,5 @@
 import { CFI_REGEX, DNI_REGEX } from '@src/shared/domain/rules/cif';
-import {
-  ValidationArguments,
-  ValidationOptions,
-  registerDecorator,
-} from 'class-validator';
+import { ValidationArguments, ValidationOptions, registerDecorator } from 'class-validator';
 
 export const IsDNIOrCIF = (validationOptions?: ValidationOptions) => {
   // eslint-disable-next-line @typescript-eslint/ban-types

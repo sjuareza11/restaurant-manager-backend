@@ -6,9 +6,6 @@ export class CourierUrlFileCreator {
   public static createImageURL(urlImageFile: UrlImageFile): string {
     return COURIER_FILE_PATH.replace('{{id}}', urlImageFile.fileId)
       .replace('{{storeId}}', urlImageFile.storeId)
-      .replace(
-        '{{filename}}',
-        UrlUtils.normalizeUrlName(urlImageFile.fileName),
-      );
+      .replace('{{filename}}', UrlUtils.normalizeUrlName(urlImageFile.fileName));
   }
 }

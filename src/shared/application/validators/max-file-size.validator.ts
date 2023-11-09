@@ -1,13 +1,6 @@
-import {
-  ValidationArguments,
-  ValidationOptions,
-  registerDecorator,
-} from 'class-validator';
+import { ValidationArguments, ValidationOptions, registerDecorator } from 'class-validator';
 
-export const MaxFileSize = (
-  maxSize: number,
-  validationOptions?: ValidationOptions,
-) => {
+export const MaxFileSize = (maxSize: number, validationOptions?: ValidationOptions) => {
   // eslint-disable-next-line @typescript-eslint/ban-types
   return (object: Object, propertyName: string) => {
     registerDecorator({

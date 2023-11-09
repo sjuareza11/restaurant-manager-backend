@@ -4,10 +4,7 @@ import { StoreMenuServiceEntity } from '@src/stores/domain/entities/store-menu-s
 import { StoreServicesSalesChannel } from '@src/stores/domain/enums/store-services-sales-channel.enum';
 import { Document } from 'mongoose';
 @Schema()
-export class StoreMenuService
-  extends Document
-  implements StoreMenuServiceEntity
-{
+export class StoreMenuService extends Document implements StoreMenuServiceEntity {
   @Prop({ type: String, default: () => generateUUID() })
   _id: string;
   @Prop({
@@ -23,6 +20,5 @@ export class StoreMenuService
   available: boolean;
 }
 
-export const StoreMenuServiceSchema =
-  SchemaFactory.createForClass(StoreMenuService);
+export const StoreMenuServiceSchema = SchemaFactory.createForClass(StoreMenuService);
 StoreMenuServiceSchema.set('timestamps', true);

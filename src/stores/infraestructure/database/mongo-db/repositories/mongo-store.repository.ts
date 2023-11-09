@@ -5,10 +5,7 @@ export class MongoStoreRepository<T> extends MongoGenericRepository<T> {
     super(repository, populateOnFind);
   }
 
-  getStoreByOrganizationId(
-    storeId: string,
-    organizationId: string,
-  ): Promise<T> {
+  getStoreByOrganizationId(storeId: string, organizationId: string): Promise<T> {
     return this._repository.findOne({
       _id: storeId,
       organizationId,

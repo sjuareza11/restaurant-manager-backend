@@ -16,8 +16,6 @@ export class MongoDataService implements DataService {
   ) {}
 
   onApplicationBootstrap() {
-    this.organizations = new MongoOrganizationRepository<Organization>(
-      this.OrganizationRepository,
-    );
+    this.organizations = new MongoOrganizationRepository<Organization>(this.OrganizationRepository);
   }
 }

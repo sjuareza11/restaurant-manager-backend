@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Req,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AccessTokenGuard } from '@shared/infraestructure/guards/access-token.guard';
 import { AddOrganizationIdInterceptor } from '@src/shared/infraestructure/interceptors/add-organization-id.interceptor';
 import { CreateStoreDto } from '../application/dto/create-store.dto';
@@ -32,22 +22,13 @@ export class StoresController {
   findOne(@Param('storeId') storeId: string, @Req() req: any) {
     const organizationId = req.user['organizationId'];
 
-    return this.storesService.findStoreByOrganizationId(
-      storeId,
-      organizationId,
-    );
+    return this.storesService.findStoreByOrganizationId(storeId, organizationId);
   }
 
   @UseGuards(AccessTokenGuard)
   @UseInterceptors(AddOrganizationIdInterceptor)
   @Patch(':storeId')
-  update(
-    @Param('storeId') storeId: string,
-    @Body() updateStoreDto: UpdateStoreDto,
-  ) {
-    return this.storesService.updateStoreByOrganizationId(
-      storeId,
-      updateStoreDto,
-    );
+  update(@Param('storeId') storeId: string, @Body() updateStoreDto: UpdateStoreDto) {
+    return this.storesService.updateStoreByOrganizationId(storeId, updateStoreDto);
   }
 }

@@ -4,7 +4,5 @@ import { StoreEntity } from '../entities/store.entity';
 import { StoreRepository } from './store.repository';
 export abstract class DataService {
   abstract stores: StoreRepository<Partial<StoreEntity>>;
-  abstract paymentMethods: StorePaymentMethodsRepository<
-    Partial<PaymentMethodEntity>
-  >;
+  abstract paymentMethods: StorePaymentMethodsRepository<Partial<PaymentMethodEntity>>;
 }
