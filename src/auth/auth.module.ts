@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from '@users/users.module';
 import { CryptoService } from '../shared/domain/abstract/crypto-service';
@@ -9,7 +10,7 @@ import { AccessTokenStrategy } from './infraestructure/strategies/access-token.s
 import { RefreshTokenStrategy } from './infraestructure/strategies/refresh-token.strategy';
 
 @Module({
-  imports: [JwtModule.register({}), UsersModule],
+  imports: [JwtModule.register({}), UsersModule, ConfigModule],
   controllers: [AuthController],
   providers: [
     AuthService,

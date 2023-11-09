@@ -4,5 +4,4 @@ export interface MongoDatabaseConfig {
   readonly dbName: string;
   readonly user: string;
   readonly password: string;
-  readonly defaultLimit: number;
 }

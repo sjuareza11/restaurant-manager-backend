@@ -1,5 +1,5 @@
-import { ShippingCostsEntity } from '@src/stores/domain/entity/shipping-costs.entity';
-import { AddressEntity } from './../../../shared/domain/entities/address.entity';
+import { ShippingCostsEntity } from '@src/stores/domain/entities/shipping-costs.entity';
+import { AddressEntity } from '../../../shared/domain/entities/address.entity';
 import { StoreMenuServiceEntity } from './store-menu-services.entity';
 export interface StoreEntity {
   _id?: string;

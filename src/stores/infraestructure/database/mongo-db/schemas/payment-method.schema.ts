@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { generateUUID } from '@shared/domain/utils/uuid';
-import { PaymentMethodEntity } from '@src/stores/domain/entity/payment-method';
+import { PaymentMethodEntity } from '@src/stores/domain/entities/payment-method';
 import { Document } from 'mongoose';
 import { PaymentMethodsConfig } from './../../../../domain/enums/payment-methods-config.enum';
 @Schema()
 export class PaymentMethod extends Document implements PaymentMethodEntity {
-  @Prop({ type: String, default: generateUUID() })
+  @Prop({ type: String, default: () => generateUUID() })
   _id: string;
   @Prop({
     type: String,

@@ -6,7 +6,7 @@ import { generateUUID } from '@src/shared/domain/utils/uuid';
 import { Document } from 'mongoose';
 @Schema()
 export class Organization extends Document implements OrganizationEntity {
-  @Prop({ type: String, default: generateUUID() })
+  @Prop({ type: String, default: () => generateUUID() })
   _id: string;
   @Prop({ unique: true, index: true })
   taxId: string;

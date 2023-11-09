@@ -19,6 +19,14 @@ import { AuthStoreMemberGuard } from './../application/guards/auth-store-member.
 @Controller('stores/:storeId/payment-methods')
 export class PaymentMethodsController {
   constructor(private paymentMethodsService: PaymentMethodsService) {}
+
+  @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
+  @UseInterceptors(AddStoreIdInterceptor)
+  @Post()
+  create(@Body() createPaymentMethod: PaymentMethodDto) {
+    return this.paymentMethodsService.create(createPaymentMethod);
+  }
+
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get()
   findAll(@Req() req: any) {
@@ -26,17 +34,12 @@ export class PaymentMethodsController {
 
     return this.paymentMethodsService.findAllByStoreId(storeId);
   }
+
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @Req() req: any) {
     const storeId = req.user['storeId'];
     return this.paymentMethodsService.findOneByStoreId(id, storeId);
-  }
-  @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
-  @UseInterceptors(AddStoreIdInterceptor)
-  @Post()
-  create(@Body() createPaymentMethod: PaymentMethodDto) {
-    return this.paymentMethodsService.create(createPaymentMethod);
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
@@ -55,8 +58,9 @@ export class PaymentMethodsController {
    */
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @UseInterceptors(AddStoreIdInterceptor)
-  @Delete()
-  deleteClassName_singular(@Param('id') id: string) {
-    this.paymentMethodsService.delete(id);
+  @Delete(':id')
+  remove(@Param('id') id: string, @Req() req: any) {
+    const storeId = req.user['storeId'];
+    this.paymentMethodsService.removeByStoreId(id, storeId);
   }
 }

@@ -5,7 +5,7 @@ import {
   AddressSchema,
 } from '@shared/infraestructure/database/mongo-db/schemas/address.schema';
 import { Document } from 'mongoose';
-import { StoreEntity } from '../../../../domain/entity/store.entity';
+import { StoreEntity } from '../../../../domain/entities/store.entity';
 import { ShippingCosts, ShippingCostsSchema } from './shipping-costs.schema';
 import {
   StoreMenuService,
@@ -14,7 +14,7 @@ import {
 
 @Schema()
 export class Store extends Document implements StoreEntity {
-  @Prop({ type: String, default: generateUUID() })
+  @Prop({ type: String, default: () => generateUUID() })
   _id: string;
   @Prop({ required: true, unique: true })
   code: string;

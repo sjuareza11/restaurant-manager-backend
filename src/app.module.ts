@@ -1,25 +1,29 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter'; //new
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
-import { EnvConfigModule } from './config/env-config.module';
-import { MONGO_CONFIG } from './config/infraestructure/env-mongo-config';
+import { envConfigBuilder } from './config/infraestructure/env-config-builder';
+import { CouriersModule } from './couriers/couriers.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { StoresModule } from './stores/stores.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [envConfigBuilder],
+    }),
     AuthModule,
-    EnvConfigModule,
     MongooseModule.forRoot(
-      `mongodb://${MONGO_CONFIG.user}:${MONGO_CONFIG.password}@${MONGO_CONFIG.host}:${MONGO_CONFIG.port}`,
-      { dbName: MONGO_CONFIG.dbName },
+      `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}:${process.env.MONGODB_PORT}`,
+      { dbName: process.env.MONGODB_NAME },
     ),
     UsersModule,
     OrganizationsModule,
     StoresModule,
     EventEmitterModule.forRoot(),
+    CouriersModule,
   ],
   controllers: [],
   providers: [],
