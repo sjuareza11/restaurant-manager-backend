@@ -1,36 +1,34 @@
-import { CourierEntity } from '@src/couriers/domain/entities/courier.entity';
+import { CategoryEntity } from '@src/menus/domain/entities/category.entity';
 import { UrlFileCreator } from '@src/shared/application/utils/url-file-creator.ts';
 import { HasMimeType } from '@src/shared/application/validators/has-mime-type';
-import { IsDNIOrCIF } from '@src/shared/application/validators/is-dni-or-cif';
 import { IsFile } from '@src/shared/application/validators/is-file.validator';
 import { MaxFileSize } from '@src/shared/application/validators/max-file-size.validator';
 import { UploadFile } from '@src/shared/domain/models/upload-file';
 import { UUID_VERSION, generateUUID } from '@src/shared/domain/utils/uuid';
 import { FileUtils } from '@src/shared/utils/file.utils';
-import { IsBoolean, IsEmail, IsMobilePhone, IsOptional, IsString, IsUUID, MinLength } from 'class-validator';
+import { IsBoolean, IsOptional, IsString, IsUUID, Length, MinLength, NotContains } from 'class-validator';
 
-export class CreateCourierDto {
+export class CreateCategoryDto {
   @IsOptional()
   @IsUUID(UUID_VERSION)
   _id: string;
-  @IsString()
-  @IsDNIOrCIF()
-  personalId: string;
+  @IsUUID(UUID_VERSION)
+  storeId: string;
+  @IsUUID(UUID_VERSION)
+  menuId: string;
   @IsString()
   @MinLength(1)
   name: string;
   @IsString()
   @MinLength(1)
-  surname: string;
+  description: string;
+  @NotContains(' ')
   @IsString()
-  @IsEmail()
-  email;
-  @IsString()
-  @IsMobilePhone('es-ES')
-  phone: string;
+  @Length(3, 20)
+  code: string;
   @IsOptional()
   @IsBoolean()
-  available?: boolean;
+  available: boolean;
   @IsOptional()
   @IsFile()
   @MaxFileSize(FileUtils.convertMBytesToBytes(20))
@@ -39,16 +37,14 @@ export class CreateCourierDto {
   @IsOptional()
   @IsString()
   imageUrl?: string;
-  @IsUUID(UUID_VERSION)
-  storeId: string;
 
-  constructor(partial: Partial<CreateCourierDto>) {
+  constructor(partial: Partial<CreateCategoryDto>) {
     Object.assign(this, partial);
   }
 
-  toEntity(): Partial<CourierEntity> {
+  toEntity(): Partial<CategoryEntity> {
     this._id = this._id ? this._id : generateUUID();
-    const dto = new CreateCourierDto(this);
+    const dto = new CreateCategoryDto(this);
     const { imageFile, ...rest } = dto;
     return {
       ...rest,
