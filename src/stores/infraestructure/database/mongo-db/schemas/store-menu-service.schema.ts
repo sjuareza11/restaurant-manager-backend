@@ -10,7 +10,10 @@ export class StoreMenuService
 {
   @Prop({ type: String, default: () => generateUUID() })
   _id: string;
-  @Prop({ required: true })
+  @Prop({
+    type: String,
+    ref: 'Menus',
+  })
   menuId: string;
   @Prop({ type: String, enum: StoreServicesSalesChannel, required: true })
   salesChannel: StoreServicesSalesChannel;

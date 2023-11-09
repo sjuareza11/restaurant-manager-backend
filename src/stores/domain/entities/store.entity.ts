@@ -6,8 +6,8 @@ export interface StoreEntity {
   code: string;
   name: string;
   address: AddressEntity;
-  shippingCosts: ShippingCostsEntity[];
-  storeMenuServices: StoreMenuServiceEntity[];
+  shippingCosts?: ShippingCostsEntity[];
+  storeMenuServices?: StoreMenuServiceEntity[];
   organizationId: string | any;
   available: boolean;
 }

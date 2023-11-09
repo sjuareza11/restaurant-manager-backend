@@ -13,9 +13,11 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { ShippingCostsDto } from './shipping-costs.dto';
-import { StoreMenuServiceDto } from './store-menu-services.dto';
 
 export class CreateStoreDto {
+  @IsOptional()
+  @IsUUID(UUID_VERSION)
+  _id: string;
   @NotContains(' ')
   @IsString()
   @Length(3, 20)
@@ -34,11 +36,8 @@ export class CreateStoreDto {
   @Type(() => ShippingCostsDto)
   shippingCosts?: ShippingCostsDto[];
   @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => StoreMenuServiceDto)
-  storeMenuServices?: StoreMenuServiceDto[];
-  @IsOptional()
   @IsBoolean()
   available?: boolean;
+
+  constructor(partial: Partial<CreateStoreDto>) {}
 }
