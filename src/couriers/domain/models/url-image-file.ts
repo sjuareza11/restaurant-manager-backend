@@ -1,5 +1,4 @@
-export interface UrlImageFile {
+export interface UrlFile {
   fileId: string;
   storeId: string;
-  fileName: string;
 }
