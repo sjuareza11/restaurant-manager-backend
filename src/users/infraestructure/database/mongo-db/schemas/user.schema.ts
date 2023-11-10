@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { generateUUID } from '@shared/domain/utils/uuid';
+import { Organization } from '@src/organizations/infraestructure/database/mongo-db/schemas/organization.schema';
+import { Store } from '@src/stores/infraestructure/database/mongo-db/schemas/store.schema';
 import { UserEntity } from '@users/domain/entities/user.entity';
 import { Document } from 'mongoose';
 
@@ -22,9 +24,9 @@ export class User extends Document implements UserEntity {
   email: string;
   @Prop()
   refreshToken: string;
-  @Prop({ type: String, ref: 'Organization' })
+  @Prop({ type: String, ref: Organization.name })
   organizationId: string;
-  @Prop({ type: String, ref: 'Stores' })
+  @Prop({ type: String, ref: Store.name })
   storeId: string;
 }
 

@@ -23,7 +23,7 @@ export class Courier extends Document implements CourierEntity {
   imageUrl?: string;
   @Prop({
     type: String,
-    ref: 'Stores',
+    ref: 'Store',
   })
   storeId: string;
 }

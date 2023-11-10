@@ -24,7 +24,7 @@ export class Store extends Document implements StoreEntity {
   address: Address;
   @Prop({
     type: String,
-    ref: 'Organizations',
+    ref: 'Organization',
     unique: true,
     index: true,
   })
