@@ -1,12 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { CategoryEntity } from '@src/menus/domain/entities/category.entity';
+import { ProductEntity } from '@src/menus/domain/entities/product.ts';
 import { generateUUID } from '@src/shared/domain/utils/uuid';
 import { Store } from '@src/stores/infraestructure/database/mongo-db/schemas/store.schema';
 import { Document } from 'mongoose';
+import { Category } from './category.schema';
 import { Menu } from './menu.schema';
 
 @Schema()
-export class Category extends Document implements CategoryEntity {
+export class Product extends Document implements ProductEntity {
   @Prop({ type: String, default: () => generateUUID() })
   _id: string;
   @Prop({ required: true })
@@ -31,18 +32,23 @@ export class Category extends Document implements CategoryEntity {
     ref: Store.name,
   })
   storeId: string;
+  @Prop()
+  price: number;
+  @Prop({ type: [String], ref: Category.name, default: [] })
+  categories?: string[];
 }
 
-export const CategorySchema = SchemaFactory.createForClass(Category);
-CategorySchema.pre('save', function (next) {
+export const ProductSchema = SchemaFactory.createForClass(Product);
+
+ProductSchema.pre('save', function (next) {
   if (this.isNew && !this.order) {
-    this.model(Category.name)
+    this.model(Product.name)
       .find()
       .sort('-order')
       .limit(1)
-      .then(([maxOrderCategory]) => {
-        if (maxOrderCategory) {
-          this.order = (maxOrderCategory as any).order + 1;
+      .then(([maxOrderProduct]) => {
+        if (maxOrderProduct) {
+          this.order = (maxOrderProduct as any).order + 1;
         } else {
           this.order = 1;
         }

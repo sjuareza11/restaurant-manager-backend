@@ -8,12 +8,13 @@ export class MongoMenuItemsRepository<T> implements MenuItemsGenericRepository<T
 
   constructor(repository: Model<T>, populateOnFind: string[] = []) {
     this._repository = repository;
-    this._populateOnFind = populateOnFind;
+    this._populateOnFind = populateOnFind.map((field) => field.toLowerCase());
   }
   getAllItemsByStoreAndMenu(searchCriteria: MenuItemsSearchCriteria): Promise<T[]> {
     const { pagination, ...criteria } = searchCriteria;
     return this._repository
       .find({ ...criteria })
+      .populate(this._populateOnFind)
       .limit(pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10)
       .skip(pagination?.offset || parseInt(process.env.PAGINATION_DEFAULT_OFFSET) || 0);
   }

@@ -6,9 +6,21 @@ import { MaxFileSize } from '@src/shared/application/validators/max-file-size.va
 import { UploadFile } from '@src/shared/domain/models/upload-file';
 import { UUID_VERSION, generateUUID } from '@src/shared/domain/utils/uuid';
 import { FileUtils } from '@src/shared/utils/file.utils';
-import { IsBoolean, IsInt, IsOptional, IsString, IsUUID, Length, MinLength, NotContains } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsInt,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+  IsUUID,
+  Length,
+  MinLength,
+  NotContains,
+} from 'class-validator';
 
-export class CreateCategoryDto {
+export class CreateProductDto {
   @IsOptional()
   @IsUUID(UUID_VERSION)
   _id: string;
@@ -16,6 +28,10 @@ export class CreateCategoryDto {
   storeId: string;
   @IsUUID(UUID_VERSION)
   menuId: string;
+  @IsOptional()
+  @IsArray()
+  @IsUUID(UUID_VERSION, { each: true })
+  categories: string[];
   @IsString()
   @MinLength(1)
   name: string;
@@ -26,6 +42,9 @@ export class CreateCategoryDto {
   @IsString()
   @Length(3, 20)
   code: string;
+  @IsNumber()
+  @IsPositive()
+  price: number;
   @IsOptional()
   @IsInt()
   order: number;
@@ -41,13 +60,13 @@ export class CreateCategoryDto {
   @IsString()
   imageUrl?: string;
 
-  constructor(partial: Partial<CreateCategoryDto>) {
+  constructor(partial: Partial<CreateProductDto>) {
     Object.assign(this, partial);
   }
 
   toEntity(): Partial<CategoryEntity> {
     this._id = this._id ? this._id : generateUUID();
-    const dto = new CreateCategoryDto(this);
+    const dto = new CreateProductDto(this);
     const { imageFile, ...rest } = dto;
     return {
       ...rest,
