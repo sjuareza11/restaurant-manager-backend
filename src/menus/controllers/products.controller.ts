@@ -1,43 +1,57 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AccessTokenGuard } from '@src/shared/infraestructure/guards/access-token.guard';
 import { AddFilesToBodyInterceptor } from '@src/shared/infraestructure/interceptors/add-files-to-body.interceptor';
 import { AddStoreIdInterceptor } from '@src/shared/infraestructure/interceptors/add-store-id.interceptor';
 import { AuthStoreMemberGuard } from '@src/stores/application/guards/auth-store-member.guard';
-import { CategoriesService } from '../application/categories.service';
-import { CreateCategoryDto } from '../application/dto/create-category.dto';
-import { UpdateCategoryDto } from '../application/dto/update-category.dto';
+import { CreateProductDto } from '../application/dto/create-product.dto';
+import { UpdateProductDto } from '../application/dto/update-product.dto';
+import { ProductsService } from '../application/products.service';
 import { AddMenuIdInterceptor } from '../infraestructure/interceptors/add-menu-id.interceptor';
 
-@Controller('stores/:storeId/menus/:menuId/categories')
-export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService) {}
+@Controller('stores/:storeId/menus/:menuId/products')
+export class ProductsController {
+  constructor(private readonly productsService: ProductsService) {}
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @UseInterceptors(AddFilesToBodyInterceptor, AddStoreIdInterceptor, AddMenuIdInterceptor)
   @Post()
-  create(@Body() createMenuDto: CreateCategoryDto) {
-    return this.categoriesService.create(createMenuDto);
+  create(@Body() createProductDto: CreateProductDto) {
+    return this.productsService.create(createProductDto);
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get()
-  findAllByStoreId(@Req() req: any, @Param('menuId') menuId: string) {
+  findAllByStoreId(@Req() req: any, @Param('menuId') menuId: string, @Query('categoryId') categoryId: string) {
     const storeId: string = req.user['storeId'];
-    return this.categoriesService.findAllCategoriesByStoreAndMenu({ storeId, menuId });
+    return !categoryId || categoryId.length === 0
+      ? this.productsService.finAllProductsByStoreAndMenu({ storeId, menuId })
+      : this.productsService.findAllProductsByCategoryId(categoryId, { storeId, menuId });
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @Req() req: any, @Param('menuId') menuId: string) {
     const storeId: string = req.user['storeId'];
-    return this.categoriesService.findCategoryInStoreAndMenu(id, { storeId, menuId });
+    return this.productsService.findProductByStoreAndMenu(id, { storeId, menuId });
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @UseInterceptors(AddStoreIdInterceptor, AddFilesToBodyInterceptor, AddMenuIdInterceptor)
   @Patch(':id')
-  update(@Param('id') id: string, @Param('menuId') menuId: string, @Body() updateMenuDto: UpdateCategoryDto) {
-    return this.categoriesService.update(id, { ...updateMenuDto, menuId });
+  update(@Param('id') id: string, @Param('menuId') menuId: string, @Body() updateProductDto: UpdateProductDto) {
+    return this.productsService.update(id, { ...updateProductDto, menuId });
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
@@ -45,6 +59,6 @@ export class CategoriesController {
   @Delete(':id')
   remove(@Param('id') id: string, @Param('menuId') menuId: string, @Req() req: any) {
     const storeId: string = req.user['storeId'];
-    return this.categoriesService.delete(id, { storeId, menuId });
+    return this.productsService.delete(id, { storeId, menuId });
   }
 }

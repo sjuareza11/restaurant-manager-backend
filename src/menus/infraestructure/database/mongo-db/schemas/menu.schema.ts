@@ -16,7 +16,7 @@ export class Menu extends Document implements MenuEntity {
   available: boolean;
   @Prop({
     type: String,
-    ref: 'Stores',
+    ref: 'Store',
   })
   storeId: string;
 }

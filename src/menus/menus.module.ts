@@ -5,12 +5,15 @@ import { UploaderService } from '@shared/domain/abstract/uplodader-service';
 import { S3UploaderService } from '@src/shared/infraestructure/storage/s3-uploader/s3-uploader.service';
 import { CategoriesService } from './application/categories.service';
 import { MenusService } from './application/menus.service';
+import { ProductsService } from './application/products.service';
 import { CategoriesController } from './controllers/categories.controller';
 import { MenusController } from './controllers/menus.controller';
+import { ProductsController } from './controllers/products.controller';
 import { DataService } from './domain/abstract/data-service.ts';
 import { MongoDataService } from './infraestructure/database/mongo-db/mongo-data.service';
 import { Category, CategorySchema } from './infraestructure/database/mongo-db/schemas/category.schema';
 import { Menu, MenuSchema } from './infraestructure/database/mongo-db/schemas/menu.schema';
+import { Product, ProductSchema } from './infraestructure/database/mongo-db/schemas/product.schema';
 
 @Module({
   imports: [
@@ -18,13 +21,15 @@ import { Menu, MenuSchema } from './infraestructure/database/mongo-db/schemas/me
     MongooseModule.forFeature([
       { name: Menu.name, schema: MenuSchema },
       { name: Category.name, schema: CategorySchema },
+      { name: Product.name, schema: ProductSchema },
     ]),
   ],
-  controllers: [MenusController, CategoriesController],
+  controllers: [MenusController, CategoriesController, ProductsController],
   exports: [MenusService],
   providers: [
     MenusService,
     CategoriesService,
+    ProductsService,
     {
       provide: DataService,
       useClass: MongoDataService,

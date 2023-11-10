@@ -13,7 +13,7 @@ export class CategoriesService {
     private uploaderService: UploaderService,
   ) {}
 
-  finAllCategoriesByStoreAndMenu(searchCriteria: MenuItemsSearchCriteria) {
+  findAllCategoriesByStoreAndMenu(searchCriteria: MenuItemsSearchCriteria) {
     return this.dataService.categories.getAllItemsByStoreAndMenu(searchCriteria);
   }
 
@@ -51,9 +51,5 @@ export class CategoriesService {
 
   delete(id: string, secondarySearchCriteria: MenuItemsSearchCriteria) {
     return this.dataService.categories.deleteItemInStoreAndMenu(id, secondarySearchCriteria);
-  }
-
-  getAllProductsFromCategoryInContext(categoryId: string, secondarySearchCriteria: MenuItemsSearchCriteria) {
-    return this.dataService.categories.getAllProductsFromCategoryInContext(categoryId, secondarySearchCriteria);
   }
 }
