@@ -1,0 +1,9 @@
+export enum OrderStatus {
+  NEW,
+  PREPARING,
+  PENDING_PICKUP_RESTAURANT,
+  PICKED_UP,
+  OUT_FOR_DELIVERY,
+  CANCELED,
+  COMPLETED,
+}

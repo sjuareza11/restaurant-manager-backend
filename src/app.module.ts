@@ -9,6 +9,7 @@ import { MenusModule } from './menus/menus.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { StoresModule } from './stores/stores.module';
 import { UsersModule } from './users/users.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { UsersModule } from './users/users.module';
     EventEmitterModule.forRoot(),
     CouriersModule,
     MenusModule,
+    OrdersModule,
   ],
   controllers: [],
   providers: [],
