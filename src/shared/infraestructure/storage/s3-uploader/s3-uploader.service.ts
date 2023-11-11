@@ -2,12 +2,12 @@ import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { UploaderService } from '@shared/domain/abstract/uplodader-service';
-import { EnviromentConfiguration } from '@src/config/domain/environment-configuration';
+import { EnvironmentConfiguration } from '@src/config/domain/environment-configuration';
 import { FileDto } from '@src/shared/domain/dto/file.dto';
 
 @Injectable()
 export class S3UploaderService implements UploaderService {
-  constructor(private readonly configService: ConfigService<EnviromentConfiguration>) {}
+  constructor(private readonly configService: ConfigService<EnvironmentConfiguration>) {}
   AWS_S3_BUCKET = this.configService.get('awsConfig').s3bucket;
   s3Client = new S3Client({
     region: this.configService.get('awsConfig').region,
