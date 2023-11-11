@@ -7,6 +7,7 @@ import { ArgonService } from './../shared/infraestructure/argon.service';
 import { AuthService } from './application/auth.service';
 import { AuthController } from './controllers/auth/auth.controller';
 import { AccessTokenStrategy } from './infraestructure/strategies/access-token.strategy';
+import { ApiKeyStrategy } from './infraestructure/strategies/api-key.strategy';
 import { RefreshTokenStrategy } from './infraestructure/strategies/refresh-token.strategy';
 
 @Module({
@@ -15,6 +16,7 @@ import { RefreshTokenStrategy } from './infraestructure/strategies/refresh-token
   providers: [
     AuthService,
     AccessTokenStrategy,
+    ApiKeyStrategy,
     RefreshTokenStrategy,
     {
       provide: CryptoService,

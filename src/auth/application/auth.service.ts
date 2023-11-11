@@ -1,8 +1,8 @@
-import { EnviromentConfiguration } from '@config/domain/environment-configuration';
-import { JWTConfig } from '@config/domain/jwt-config';
+import { EnvironmentConfiguration } from '@config/domain/environment-configuration';
 import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { AuthConfig } from '@src/config/domain/auth-config';
 import { CryptoService } from '@src/shared/domain/abstract/crypto-service';
 import { CreateUserDto } from '@users/application/dto/create-user.dto';
 import { UsersService } from '@users/application/users.service';
@@ -11,12 +11,12 @@ import { GenerateTokenParams } from './interfaces/generate-token-params';
 
 @Injectable()
 export class AuthService {
-  private authEnviroment: JWTConfig = this.configService.get('authConfig');
+  private authEnviroment: AuthConfig = this.configService.get('authConfig');
 
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-    private configService: ConfigService<EnviromentConfiguration>,
+    private configService: ConfigService<EnvironmentConfiguration>,
     private cryptoService: CryptoService,
   ) {}
   async signUp(createUserDto: CreateUserDto): Promise<any> {
@@ -113,5 +113,10 @@ export class AuthService {
     });
     await this.updateRefreshToken(user._id, tokens.refreshToken);
     return tokens;
+  }
+
+  validateApiKey(apiKey: string) {
+    const apiKeys: string[] = this.authEnviroment.apiKey.split(',') || [];
+    return apiKeys.find((key) => apiKey == key);
   }
 }

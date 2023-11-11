@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AccessTokenGuard } from '@src/shared/infraestructure/guards/access-token.guard';
+import { ApiKeyAuthGuard } from '@src/shared/infraestructure/guards/api-key-auth.guard';
 import { AddStoreIdInterceptor } from '@src/shared/infraestructure/interceptors/add-store-id.interceptor';
 import { AuthStoreMemberGuard } from '@src/stores/application/guards/auth-store-member.guard';
 import { CreateOrderDto } from '../application/dto/create-order.dto';
@@ -10,6 +11,7 @@ import { OrdersService } from '../application/orders.service';
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
+  @UseGuards(ApiKeyAuthGuard)
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersService.create(createOrderDto);
