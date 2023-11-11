@@ -5,6 +5,7 @@ https://docs.nestjs.com/providers#services
 */
 
 import { Injectable } from '@nestjs/common';
+import { QueryOptionsDto } from '@src/shared/domain/dto/get-all-options.dto';
 
 @Injectable()
 export class PaymentMethodsService {
@@ -13,17 +14,17 @@ export class PaymentMethodsService {
   create(createPaymentMethodDto: PaymentMethodDto) {
     return this.dataService.paymentMethods.create(createPaymentMethodDto);
   }
-  findAllByStoreId(storeId: string) {
-    return this.dataService.paymentMethods.getItemsByStoreId(storeId);
+  findAll(storeId: string, options?: QueryOptionsDto) {
+    return this.dataService.paymentMethods.getItemsByStoreId(storeId, options);
   }
-  findOneByStoreId(id: string, storeId: string) {
+  findOne(id: string, storeId: string) {
     return this.dataService.paymentMethods.getItemByStoreId(id, storeId);
   }
 
   update(id: string, updatePaymentMethodDto: PaymentMethodDto) {
     return this.dataService.paymentMethods.update(id, updatePaymentMethodDto);
   }
-  removeByStoreId(id: string, storeId: string) {
+  remove(id: string, storeId: string) {
     return this.dataService.paymentMethods.deleteByStoreId(id, storeId);
   }
 }

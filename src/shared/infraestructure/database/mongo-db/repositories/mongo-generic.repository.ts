@@ -1,6 +1,6 @@
 import { Model } from 'mongoose';
 import { GenericRepository } from 'src/shared/domain/abstract/generic-repository';
-import { GetAllOptionsDTO } from '../../../../domain/dto/get-all-options.dto';
+import { QueryOptionsDto } from '../../../../domain/dto/get-all-options.dto';
 
 export class MongoGenericRepository<T> implements GenericRepository<T> {
   protected _repository: Model<T>;
@@ -11,7 +11,7 @@ export class MongoGenericRepository<T> implements GenericRepository<T> {
     this._populateOnFind = populateOnFind;
   }
 
-  getAll(options?: GetAllOptionsDTO): Promise<T[]> {
+  getAll(options?: QueryOptionsDto): Promise<T[]> {
     return this._repository.find().populate(this._populateOnFind).exec();
   }
 

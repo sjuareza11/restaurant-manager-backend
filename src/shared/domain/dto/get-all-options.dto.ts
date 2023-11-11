@@ -1,4 +1,4 @@
-import { PaginationDTO } from './pagination.dto';
-export class GetAllOptionsDTO {
-  pagination?: PaginationDTO;
+import { PaginationDto } from './pagination.dto';
+export class QueryOptionsDto {
+  pagination?: PaginationDto;
 }

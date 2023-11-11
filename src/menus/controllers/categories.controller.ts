@@ -1,4 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { PaginationDto } from '@src/shared/domain/dto/pagination.dto';
 import { AccessTokenGuard } from '@src/shared/infraestructure/guards/access-token.guard';
 import { AddFilesToBodyInterceptor } from '@src/shared/infraestructure/interceptors/add-files-to-body.interceptor';
 import { AddStoreIdInterceptor } from '@src/shared/infraestructure/interceptors/add-store-id.interceptor';
@@ -21,16 +34,16 @@ export class CategoriesController {
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get()
-  findAllByStoreId(@Req() req: any, @Param('menuId') menuId: string) {
+  findAll(@Req() req: any, @Param('menuId') menuId: string, @Query() paginationDto: PaginationDto) {
     const storeId: string = req.user['storeId'];
-    return this.categoriesService.findAllCategoriesByStoreAndMenu({ storeId, menuId });
+    return this.categoriesService.findAll({ storeId, menuId, pagination: paginationDto });
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @Req() req: any, @Param('menuId') menuId: string) {
     const storeId: string = req.user['storeId'];
-    return this.categoriesService.findCategoryInStoreAndMenu(id, { storeId, menuId });
+    return this.categoriesService.findOne(id, { storeId, menuId });
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)

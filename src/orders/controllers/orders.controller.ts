@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import { PaginationDto } from '@src/shared/domain/dto/pagination.dto';
 import { AccessTokenGuard } from '@src/shared/infraestructure/guards/access-token.guard';
 import { ApiKeyAuthGuard } from '@src/shared/infraestructure/guards/api-key-auth.guard';
 import { AddStoreIdInterceptor } from '@src/shared/infraestructure/interceptors/add-store-id.interceptor';
@@ -19,9 +20,9 @@ export class OrdersController {
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get()
-  findAll(@Req() req: any) {
+  findAll(@Req() req: any, @Query() paginationDto: PaginationDto) {
     const storeId = req.user['storeId'];
-    return this.ordersService.findAll(storeId);
+    return this.ordersService.findAll(storeId, { pagination: paginationDto });
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)

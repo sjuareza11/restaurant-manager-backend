@@ -13,11 +13,11 @@ export class CategoriesService {
     private uploaderService: UploaderService,
   ) {}
 
-  findAllCategoriesByStoreAndMenu(searchCriteria: MenuItemsSearchCriteria) {
+  findAll(searchCriteria: MenuItemsSearchCriteria) {
     return this.dataService.categories.getAllItemsByStoreAndMenu(searchCriteria);
   }
 
-  findCategoryInStoreAndMenu(id: string, secondarySearchCriteria: MenuItemsSearchCriteria) {
+  findOne(id: string, secondarySearchCriteria: MenuItemsSearchCriteria) {
     return this.dataService.categories.getItemByIdInStoreAndMenu(id, secondarySearchCriteria);
   }
 

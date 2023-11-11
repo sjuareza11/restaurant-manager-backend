@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { QueryOptionsDto } from '@src/shared/domain/dto/get-all-options.dto';
 import { DataService } from '../domain/abstract/data-service';
 import { OrderCustomerEntity } from '../domain/entities/order-customer.entity';
 import { OrderEntity } from '../domain/entities/order.entity';
@@ -25,7 +26,7 @@ export class OrdersService {
     return this.dataService.orders.create(order);
   }
 
-  findAll(storeId: string) {
+  findAll(storeId: string, options?: QueryOptionsDto) {
     return this.dataService.orders.getItemsByStoreId(storeId);
   }
 

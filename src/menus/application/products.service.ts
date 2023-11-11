@@ -15,15 +15,15 @@ export class ProductsService {
     private categoriesService: CategoriesService,
   ) {}
 
-  finAllProductsByStoreAndMenu(searchCriteria: MenuItemsSearchCriteria) {
+  finAll(searchCriteria: MenuItemsSearchCriteria) {
     return this.dataService.products.getAllItemsByStoreAndMenu(searchCriteria);
   }
 
-  findProductByStoreAndMenu(id: string, secondarySearchCriteria: MenuItemsSearchCriteria) {
+  findOne(id: string, secondarySearchCriteria: MenuItemsSearchCriteria) {
     return this.dataService.products.getItemByIdInStoreAndMenu(id, secondarySearchCriteria);
   }
 
-  findAllProductsByCategoryId(categoryId: string, secondarySearchCriteria: MenuItemsSearchCriteria) {
+  findAllByCategoryId(categoryId: string, secondarySearchCriteria: MenuItemsSearchCriteria) {
     return this.dataService.products.findAllProductsByCategoryId(categoryId, secondarySearchCriteria);
   }
 

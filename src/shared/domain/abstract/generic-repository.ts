@@ -1,7 +1,7 @@
-import { GetAllOptionsDTO } from '../dto/get-all-options.dto';
+import { QueryOptionsDto } from '../dto/get-all-options.dto';
 
 export abstract class GenericRepository<T> {
-  abstract getAll(options?: GetAllOptionsDTO): Promise<T[]>;
+  abstract getAll(options?: QueryOptionsDto): Promise<T[]>;
 
   abstract getById(id: string): Promise<T>;
 

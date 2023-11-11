@@ -21,11 +21,11 @@ export class StoresService {
     return store;
   }
 
-  findStoreByOrganizationId(id: string, organizationId: string) {
+  findOne(id: string, organizationId: string) {
     return this.dataService.stores.getStoreByOrganizationId(id, organizationId);
   }
 
-  async updateStoreByOrganizationId(id: string, updateStoreDto: UpdateStoreDto) {
+  async update(id: string, updateStoreDto: UpdateStoreDto) {
     const store = await this.dataService.stores.getStoreByOrganizationId(id, updateStoreDto.organizationId);
     if (store) {
       if (updateStoreDto.storeMenuServices.some((menuService) => menuService.menuId)) {
@@ -38,7 +38,7 @@ export class StoresService {
   }
 
   private async getMenusByStoreId(store: StoreEntity) {
-    const storeMenus = await this.menusService.findAllByStoreId(store._id);
+    const storeMenus = await this.menusService.findAll(store._id);
     return store.storeMenuServices
       .map((menuService) => {
         const menu = storeMenus.find((menu) => menu._id === menuService.menuId);

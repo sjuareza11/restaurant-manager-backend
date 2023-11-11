@@ -16,6 +16,7 @@ import { AddFilesToBodyInterceptor } from '@src/shared/infraestructure/intercept
 import { AddStoreIdInterceptor } from '@src/shared/infraestructure/interceptors/add-store-id.interceptor';
 import { AuthStoreMemberGuard } from '@src/stores/application/guards/auth-store-member.guard';
 import { CreateProductDto } from '../application/dto/create-product.dto';
+import { ProductQueryParamsDto } from '../application/dto/product-query-params.dto';
 import { UpdateProductDto } from '../application/dto/update-product.dto';
 import { ProductsService } from '../application/products.service';
 import { AddMenuIdInterceptor } from '../infraestructure/interceptors/add-menu-id.interceptor';
@@ -33,18 +34,23 @@ export class ProductsController {
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get()
-  findAllByStoreId(@Req() req: any, @Param('menuId') menuId: string, @Query('categoryId') categoryId: string) {
+  findAll(@Req() req: any, @Param('menuId') menuId: string, @Query() queryParams: ProductQueryParamsDto) {
+    const { categoryId, ...secondarySearchCriteria } = queryParams;
     const storeId: string = req.user['storeId'];
     return !categoryId || categoryId.length === 0
-      ? this.productsService.finAllProductsByStoreAndMenu({ storeId, menuId })
-      : this.productsService.findAllProductsByCategoryId(categoryId, { storeId, menuId });
+      ? this.productsService.finAll({ storeId, menuId, pagination: secondarySearchCriteria })
+      : this.productsService.findAllByCategoryId(queryParams.categoryId, {
+          storeId,
+          menuId,
+          pagination: secondarySearchCriteria,
+        });
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @Req() req: any, @Param('menuId') menuId: string) {
     const storeId: string = req.user['storeId'];
-    return this.productsService.findProductByStoreAndMenu(id, { storeId, menuId });
+    return this.productsService.findOne(id, { storeId, menuId });
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)

@@ -1,6 +1,6 @@
-import { GetAllOptionsDTO } from '@src/shared/domain/dto/get-all-options.dto';
+import { QueryOptionsDto } from '@src/shared/domain/dto/get-all-options.dto';
 
-export interface MenuItemsSearchCriteria extends GetAllOptionsDTO {
+export interface MenuItemsSearchCriteria extends QueryOptionsDto {
   storeId: string;
   menuId: string;
 }

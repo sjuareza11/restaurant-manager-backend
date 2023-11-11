@@ -1,8 +1,8 @@
 import { GenericRepository } from '@shared/domain/abstract/generic-repository';
-import { GetAllOptionsDTO } from '@shared/domain/dto/get-all-options.dto';
+import { QueryOptionsDto } from '@shared/domain/dto/get-all-options.dto';
 
 export abstract class StoreRepository<T> implements GenericRepository<T> {
-  abstract getAll(options: GetAllOptionsDTO): Promise<T[]>;
+  abstract getAll(options?: QueryOptionsDto): Promise<T[]>;
 
   abstract getById(id: string): Promise<T>;
 

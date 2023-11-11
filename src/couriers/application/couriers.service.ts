@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UploaderService } from '@src/shared/domain/abstract/uplodader-service';
 import { FileDto } from '@src/shared/domain/dto/file.dto';
+import { QueryOptionsDto } from '@src/shared/domain/dto/get-all-options.dto';
 import { DataService } from '../domain/abstract/data-service';
 import { CreateCourierDto } from './dto/create-courier.dto';
 import { UpdateCourierDto } from './dto/update-courier.dto';
@@ -27,11 +28,11 @@ export class CouriersService {
     }
   }
 
-  findAllByStoreId(storeId: string) {
+  findAll(storeId: string, options?: QueryOptionsDto) {
     return this.dataService.couriers.getItemsByStoreId(storeId);
   }
 
-  findOneByStoreId(id: string, storeId: string) {
+  findOne(id: string, storeId: string) {
     return this.dataService.couriers.getItemByStoreId(id, storeId);
   }
 
@@ -48,7 +49,7 @@ export class CouriersService {
     return courier;
   }
 
-  removeByStoreId(id: string, storeId: string) {
+  remove(id: string, storeId: string) {
     return this.dataService.couriers.deleteByStoreId(id, storeId);
   }
 }

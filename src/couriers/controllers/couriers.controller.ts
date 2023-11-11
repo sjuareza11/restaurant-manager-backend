@@ -1,4 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { PaginationDto } from '@src/shared/domain/dto/pagination.dto';
 import { AccessTokenGuard } from '@src/shared/infraestructure/guards/access-token.guard';
 import { AddFilesToBodyInterceptor } from '@src/shared/infraestructure/interceptors/add-files-to-body.interceptor';
 import { AddStoreIdInterceptor } from '@src/shared/infraestructure/interceptors/add-store-id.interceptor';
@@ -20,16 +33,16 @@ export class CouriersController {
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get()
-  findAllByStoreId(@Req() req: any) {
+  findAll(@Req() req: any, @Query() paginationDto: PaginationDto) {
     const storeId = req.user['storeId'];
-    return this.couriersService.findAllByStoreId(storeId);
+    return this.couriersService.findAll(storeId, { pagination: paginationDto });
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @Req() req: any) {
     const storeId = req.user['storeId'];
-    return this.couriersService.findOneByStoreId(id, storeId);
+    return this.couriersService.findOne(id, storeId);
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
@@ -44,6 +57,6 @@ export class CouriersController {
   @Delete(':id')
   remove(@Param('id') id: string, @Req() req: any) {
     const storeId = req.user['storeId'];
-    return this.couriersService.removeByStoreId(id, storeId);
+    return this.couriersService.remove(id, storeId);
   }
 }

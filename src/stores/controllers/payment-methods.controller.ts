@@ -1,4 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { PaginationDto } from '@src/shared/domain/dto/pagination.dto';
 import { AccessTokenGuard } from '@src/shared/infraestructure/guards/access-token.guard';
 import { PaymentMethodDto } from '../application/dto/payment-method.dto';
 import { PaymentMethodsService } from '../application/payment-methods.service';
@@ -18,17 +31,17 @@ export class PaymentMethodsController {
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get()
-  findAll(@Req() req: any) {
+  findAll(@Req() req: any, @Query() paginationDto: PaginationDto) {
     const storeId = req.user['storeId'];
 
-    return this.paymentMethodsService.findAllByStoreId(storeId);
+    return this.paymentMethodsService.findAll(storeId, { pagination: paginationDto });
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @Req() req: any) {
     const storeId = req.user['storeId'];
-    return this.paymentMethodsService.findOneByStoreId(id, storeId);
+    return this.paymentMethodsService.findOne(id, storeId);
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
@@ -47,6 +60,6 @@ export class PaymentMethodsController {
   @Delete(':id')
   remove(@Param('id') id: string, @Req() req: any) {
     const storeId = req.user['storeId'];
-    this.paymentMethodsService.removeByStoreId(id, storeId);
+    this.paymentMethodsService.remove(id, storeId);
   }
 }

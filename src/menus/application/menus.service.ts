@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { QueryOptionsDto } from '@src/shared/domain/dto/get-all-options.dto.js';
 import { DataService } from '../domain/abstract/data-service.ts';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
@@ -10,11 +11,11 @@ export class MenusService {
     return this.dataService.menus.create(createMenuDto);
   }
 
-  findAllByStoreId(storeId: string) {
-    return this.dataService.menus.getItemsByStoreId(storeId);
+  findAll(storeId: string, options?: QueryOptionsDto) {
+    return this.dataService.menus.getItemsByStoreId(storeId, options);
   }
 
-  findOneByStoreId(id: string, storeId: string) {
+  findOne(id: string, storeId: string) {
     return this.dataService.menus.getItemByStoreId(id, storeId);
   }
 

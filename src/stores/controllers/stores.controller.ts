@@ -22,13 +22,13 @@ export class StoresController {
   findOne(@Param('storeId') storeId: string, @Req() req: any) {
     const organizationId = req.user['organizationId'];
 
-    return this.storesService.findStoreByOrganizationId(storeId, organizationId);
+    return this.storesService.findOne(storeId, organizationId);
   }
 
   @UseGuards(AccessTokenGuard)
   @UseInterceptors(AddOrganizationIdInterceptor)
   @Patch(':storeId')
   update(@Param('storeId') storeId: string, @Body() updateStoreDto: UpdateStoreDto) {
-    return this.storesService.updateStoreByOrganizationId(storeId, updateStoreDto);
+    return this.storesService.update(storeId, updateStoreDto);
   }
 }

@@ -1,6 +1,6 @@
 import { StoreItemsGenericRepository } from '@src/shared/domain/abstract/store-items-generic.repository';
 import { Model } from 'mongoose';
-import { GetAllOptionsDTO } from '../../../../domain/dto/get-all-options.dto';
+import { QueryOptionsDto } from '../../../../domain/dto/get-all-options.dto';
 
 export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRepository<T> {
   protected _repository: Model<T>;
@@ -10,7 +10,7 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
     this._repository = repository;
     this._populateOnFind = populateOnFind;
   }
-  getItemsByStoreId(storeId: string, options: GetAllOptionsDTO): Promise<T[]> {
+  getItemsByStoreId(storeId: string, options?: QueryOptionsDto): Promise<T[]> {
     return this._repository
       .find({ storeId })
       .limit(options?.pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10)
@@ -26,7 +26,7 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
     return this._repository.deleteOne({ _id: itemId, storeId });
   }
 
-  getAll(options?: GetAllOptionsDTO): Promise<T[]> {
+  getAll(options?: QueryOptionsDto): Promise<T[]> {
     return this._repository
       .find()
       .limit(options?.pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10)
