@@ -4,6 +4,8 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
+  IsEmail,
+  IsMobilePhone,
   IsOptional,
   IsString,
   IsUUID,
@@ -18,6 +20,7 @@ export class CreateStoreDto {
   @IsOptional()
   @IsUUID(UUID_VERSION)
   _id: string;
+  @IsOptional()
   @NotContains(' ')
   @IsString()
   @Length(3, 20)
@@ -25,6 +28,11 @@ export class CreateStoreDto {
   @IsString()
   @MinLength(1)
   name: string;
+  @IsString()
+  @IsEmail()
+  email: string;
+  @IsMobilePhone('es-ES')
+  phone: string;
   @ValidateNested()
   @Type(() => AddressDto)
   address: AddressDto;

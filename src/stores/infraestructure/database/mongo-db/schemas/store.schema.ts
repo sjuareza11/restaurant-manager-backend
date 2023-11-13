@@ -10,12 +10,16 @@ import { StoreMenuService, StoreMenuServiceSchema } from './store-menu-service.s
 export class Store extends Document implements StoreEntity {
   @Prop({ type: String, default: () => generateUUID() })
   _id: string;
-  @Prop({ required: true, unique: true })
+  @Prop({ unique: true })
   code: string;
   @Prop({ required: true })
   name: string;
   @Prop({ default: false })
   available: boolean;
+  @Prop()
+  email: string;
+  @Prop()
+  phone: string;
   @Prop({ type: [ShippingCostsSchema] })
   shippingCosts: Array<ShippingCosts>;
   @Prop({ type: [StoreMenuServiceSchema] })

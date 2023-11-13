@@ -1,4 +1,4 @@
-import { IsInt, IsLatitude, IsLongitude, IsString, MinLength } from 'class-validator';
+import { IsInt, IsLatitude, IsLongitude, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class AddressDto {
   @IsString()
@@ -8,11 +8,14 @@ export class AddressDto {
   latitude: string;
   @IsLongitude()
   longitude: string;
+  @IsOptional()
   @IsInt()
   zip: number;
+  @IsOptional()
   @IsString()
   @MinLength(1)
   city: string;
+  @IsOptional()
   @IsString()
   @MinLength(1)
   province: string;
