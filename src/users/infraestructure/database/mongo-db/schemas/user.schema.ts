@@ -28,6 +28,8 @@ export class User extends Document implements UserEntity {
   organizationId: string;
   @Prop({ type: String, ref: Store.name })
   storeId: string;
+  @Prop()
+  legalTermsAndConditions: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

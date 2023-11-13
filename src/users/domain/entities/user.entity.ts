@@ -8,4 +8,5 @@ export interface UserEntity {
   refreshToken?: string;
   organizationId?: string | any;
   storeId?: string | any;
+  legalTermsAndConditions: boolean;
 }
