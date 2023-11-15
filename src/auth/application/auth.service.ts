@@ -39,7 +39,10 @@ export class AuthService {
       storeId: newUser.storeId,
     });
     await this.updateRefreshToken(newUser._id, tokens.refreshToken);
-    return tokens;
+    return {
+      user: newUser,
+      tokens,
+    };
   }
 
   async signIn(data: AuthDto) {
@@ -55,7 +58,10 @@ export class AuthService {
       storeId: user.storeId,
     });
     await this.updateRefreshToken(user._id, tokens.refreshToken);
-    return tokens;
+    return {
+      user,
+      tokens,
+    };
   }
 
   async logout(userId: string) {

@@ -9,8 +9,9 @@ export class Menu extends Document implements MenuEntity {
   _id: string;
   @Prop({ required: true })
   name: string;
+  @Prop()
   description: string;
-  @Prop({ required: true, unique: true, index: true })
+  @Prop({ required: true })
   code: string;
   @Prop({ default: true })
   available: boolean;

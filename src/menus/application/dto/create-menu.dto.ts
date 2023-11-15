@@ -8,8 +8,8 @@ export class CreateMenuDto {
   @IsString()
   @MinLength(1)
   name: string;
+  @IsOptional()
   @IsString()
-  @MinLength(1)
   description: string;
   @NotContains(' ')
   @IsString()

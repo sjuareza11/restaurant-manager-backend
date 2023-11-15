@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import { AccessTokenGuard } from '@src/shared/infraestructure/guards/access-token.guard';
 import { UpdateUserDto } from './application/dto/update-user.dto';
+import { AccessUserDetailsGuard } from './application/guards/access-user-details/access-user-details.guard';
 import { UserEventsHandlerService } from './application/user-events-handler/user-events-handler.service';
 import { UsersService } from './application/users.service';
 
@@ -19,9 +21,9 @@ export class UsersController {
   // findAll() {
   //   return this.usersService.findAll();
   // }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @UseGuards(AccessTokenGuard, AccessUserDetailsGuard)
+  @Get(':userId')
+  findOne(@Param('userId') id: string) {
     return this.usersService.findById(id);
   }
   @Patch(':id')
