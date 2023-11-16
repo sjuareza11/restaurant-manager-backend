@@ -26,6 +26,15 @@ export class MongoMenuItemsRepository<T> implements MenuItemsGenericRepository<T
       ...criteria,
     });
   }
+
+  getItemByCode(id: string, secondarySearchCriteria: MenuItemsSearchCriteria): Promise<T> {
+    const { pagination, ...criteria } = secondarySearchCriteria;
+    return this._repository.findById({
+      _id: id,
+      ...criteria,
+    });
+  }
+
   createItemInStoreAndMenu(item: T): Promise<T> {
     return this._repository.create(item);
   }

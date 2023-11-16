@@ -12,6 +12,8 @@ export abstract class ProductRepository<T> implements MenuItemsGenericRepository
 
   abstract deleteItemInStoreAndMenu(id: string, secondarySearchCriteria: MenuItemsSearchCriteria);
 
+  abstract getItemByCode(code: string, secondarySearchCriteria: MenuItemsSearchCriteria): Promise<T>;
+
   abstract findAllProductsByCategoryId(
     categoryId: string,
     secondarySearchCriteria: MenuItemsSearchCriteria,

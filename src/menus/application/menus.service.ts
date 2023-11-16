@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { QueryOptionsDto } from '@src/shared/domain/dto/get-all-options.dto.js';
 import { DataService } from '../domain/abstract/data-service.ts';
 import { CreateMenuDto } from './dto/create-menu.dto';
@@ -7,7 +7,14 @@ import { UpdateMenuDto } from './dto/update-menu.dto';
 @Injectable()
 export class MenusService {
   constructor(private dataService: DataService) {}
-  create(createMenuDto: CreateMenuDto) {
+  async create(createMenuDto: CreateMenuDto) {
+    const menuByCode = await this.dataService.menus.getItemByCriteria({
+      code: createMenuDto.code,
+      storeId: createMenuDto.storeId,
+    });
+    if (menuByCode) {
+      throw new BadRequestException('menuCodeAlreadyExists');
+    }
     return this.dataService.menus.create(createMenuDto);
   }
 

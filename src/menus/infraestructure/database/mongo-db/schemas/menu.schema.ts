@@ -23,3 +23,4 @@ export class Menu extends Document implements MenuEntity {
 }
 
 export const MenuSchema = SchemaFactory.createForClass(Menu);
+MenuSchema.set('timestamps', true);

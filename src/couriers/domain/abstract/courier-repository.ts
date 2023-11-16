@@ -8,7 +8,7 @@ export abstract class CourierRepository<T> implements StoreItemsGenericRepositor
 
   abstract getItemByStoreId(itemId: string, storeId: string): Promise<T>;
 
-  abstract getItemsByStoreId(storeId: string, options?: QueryOptionsDto): Promise<T[]>;
+  abstract getItemsByStoreId(storeId: string, options?: QueryOptionsDto): Promise<{ items: T[]; total: number }>;
 
   abstract deleteByStoreId(itemId: string, storeId: string);
 

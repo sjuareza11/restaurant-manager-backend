@@ -11,4 +11,10 @@ export class MongoStoreRepository<T> extends MongoGenericRepository<T> {
       organizationId,
     });
   }
+  getItemByCode(code: string, organizationId: string): Promise<T> {
+    return this._repository.findOne({
+      code,
+      organizationId,
+    });
+  }
 }

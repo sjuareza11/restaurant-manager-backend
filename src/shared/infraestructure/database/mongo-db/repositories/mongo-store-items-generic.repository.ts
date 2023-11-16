@@ -10,12 +10,17 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
     this._repository = repository;
     this._populateOnFind = populateOnFind;
   }
-  getItemsByStoreId(storeId: string, options?: QueryOptionsDto): Promise<T[]> {
-    return this._repository
-      .find({ storeId })
-      .limit(options?.pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10)
-      .skip(options?.pagination?.offset || parseInt(process.env.PAGINATION_DEFAULT_OFFSET) || 0)
-      .select('-__v');
+  async getItemsByStoreId(storeId: string, options?: QueryOptionsDto): Promise<{ items: T[]; total: number }> {
+    const total = await this._repository.countDocuments({ storeId });
+    console.log('options', options);
+
+    const page = options?.pagination?.offset || 1;
+    const limit = options?.pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10;
+    const skip = (page - 1) * limit;
+
+    const items = await this._repository.find({ storeId }).limit(limit).skip(skip).select('-__v');
+
+    return { items, total };
   }
 
   getItemByStoreId(itemId: string, storeId: string): Promise<T> {

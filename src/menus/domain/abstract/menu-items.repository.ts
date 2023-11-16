@@ -5,6 +5,8 @@ export abstract class MenuItemsGenericRepository<T> {
 
   abstract getItemByIdInStoreAndMenu(id: string, secondarySearchCriteria: MenuItemsSearchCriteria): Promise<T>;
 
+  abstract getItemByCode(code: string, secondarySearchCriteria: MenuItemsSearchCriteria): Promise<T>;
+
   abstract createItemInStoreAndMenu(menuItem: T): Promise<T>;
 
   abstract updateItemInStoreAndMenu(id: string, menuItem: T): Promise<T>;

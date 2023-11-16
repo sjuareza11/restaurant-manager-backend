@@ -38,7 +38,7 @@ export class StoresService {
   }
 
   private async getMenusByStoreId(store: StoreEntity) {
-    const storeMenus = await this.menusService.findAll(store._id);
+    const { items: storeMenus } = await this.menusService.findAll(store._id);
     return store.storeMenuServices
       .map((menuService) => {
         const menu = storeMenus.find((menu) => menu._id === menuService.menuId);

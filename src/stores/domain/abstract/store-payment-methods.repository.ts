@@ -5,7 +5,7 @@ export abstract class StorePaymentMethodsRepository<T> implements StoreItemsGene
   abstract getAll(options?: QueryOptionsDto): Promise<T[]>;
   abstract getById(id: string): Promise<T>;
   abstract getItemByStoreId(itemId: string, storeId: string): Promise<T>;
-  abstract getItemsByStoreId(storeId: string, options?: QueryOptionsDto): Promise<T[]>;
+  abstract getItemsByStoreId(storeId: string, options?: QueryOptionsDto): Promise<{ items: T[]; total: number }>;
   abstract deleteByStoreId(itemId: string, storeId: string);
   abstract create(item: T): Promise<T>;
   abstract update(id: string, item: T);
