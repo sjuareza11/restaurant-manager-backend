@@ -27,10 +27,10 @@ export class MongoMenuItemsRepository<T> implements MenuItemsGenericRepository<T
     });
   }
 
-  getItemByCode(id: string, secondarySearchCriteria: MenuItemsSearchCriteria): Promise<T> {
+  getItemByCode(code: string, secondarySearchCriteria: MenuItemsSearchCriteria): Promise<T> {
     const { pagination, ...criteria } = secondarySearchCriteria;
-    return this._repository.findById({
-      _id: id,
+    return this._repository.findOne({
+      code: code,
       ...criteria,
     });
   }

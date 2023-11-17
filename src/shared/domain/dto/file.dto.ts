@@ -1,3 +1,4 @@
+import { FileUtils } from '@src/shared/utils/file.utils';
 import { UrlUtils } from '../utils/url.utils';
 
 export class FileDto {
@@ -10,5 +11,6 @@ export class FileDto {
   constructor(file: Partial<FileDto>) {
     Object.assign(this, file);
     this.name = UrlUtils.normalizeUrlName(this.name);
+    this.data = file.data instanceof Buffer ? file.data : FileUtils.convertDataURIToBinary(file.data);
   }
 }

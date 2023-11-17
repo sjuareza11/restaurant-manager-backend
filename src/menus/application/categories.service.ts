@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UploaderService } from '@src/shared/domain/abstract/uplodader-service';
 import { FileDto } from '@src/shared/domain/dto/file.dto';
 import { DataService } from '../domain/abstract/data-service.ts';
@@ -22,21 +22,35 @@ export class CategoriesService {
   }
 
   async create(createCategoryDto: CreateCategoryDto) {
+    const categoryByCode = await this.dataService.categories.getItemByCode(createCategoryDto.code, {
+      storeId: createCategoryDto.storeId,
+      menuId: createCategoryDto.menuId,
+    });
+    if (categoryByCode) {
+      throw new BadRequestException('categoryCodeAlreadyExists');
+    }
     const newCategory = await this.dataService.categories.createItemInStoreAndMenu({
       ...createCategoryDto.toEntity(),
     });
     if (newCategory && createCategoryDto.imageFile) {
-      const response = await this.uploaderService.uploadFile(
+      await this.uploaderService.uploadFile(
         new FileDto({
           ...createCategoryDto.imageFile,
           fullPath: newCategory.imageUrl,
         }),
       );
-      return newCategory;
     }
+    return newCategory;
   }
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+    const categoryByCode = await this.dataService.categories.getItemByCode(updateCategoryDto.code, {
+      storeId: updateCategoryDto.storeId,
+      menuId: updateCategoryDto.menuId,
+    });
+    if (categoryByCode && categoryByCode._id !== id) {
+      throw new BadRequestException('categoryCodeAlreadyExists');
+    }
     const category = await this.dataService.categories.updateItemInStoreAndMenu(id, updateCategoryDto);
     if (category && updateCategoryDto.imageFile) {
       return await this.uploaderService.uploadFile(

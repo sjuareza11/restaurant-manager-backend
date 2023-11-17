@@ -14,13 +14,8 @@ export const IsFile = (validationOptions?: ValidationOptions) => {
           return (
             value &&
             typeof value.name === 'string' &&
-            value.data instanceof Buffer &&
             typeof value.size === 'number' &&
-            typeof value.encoding === 'string' &&
-            typeof value.tempFilePath === 'string' &&
-            typeof value.truncated === 'boolean' &&
-            typeof value.mimetype === 'string' &&
-            typeof value.md5 === 'string'
+            typeof value.mimetype === 'string'
           );
         },
         defaultMessage: (args: ValidationArguments) => {

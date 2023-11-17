@@ -19,8 +19,7 @@ export class CreateCategoryDto {
   @IsString()
   @MinLength(1)
   name: string;
-  @IsString()
-  @MinLength(1)
+  @IsOptional()
   description: string;
   @NotContains(' ')
   @IsString()
