@@ -31,10 +31,13 @@ export class MongoMenuItemsRepository<T> implements MenuItemsGenericRepository<T
 
   getItemByIdInStoreAndMenu(id: string, secondarySearchCriteria: MenuItemsSearchCriteria): Promise<T> {
     const { pagination, ...criteria } = secondarySearchCriteria;
-    return this._repository.findById({
-      _id: id,
-      ...criteria,
-    });
+    return this._repository
+      .findById({
+        _id: id,
+        ...criteria,
+      })
+      .populate(this._populateOnFind)
+      .exec() as Promise<T>;
   }
 
   getItemByCode(code: string, secondarySearchCriteria: MenuItemsSearchCriteria): Promise<T> {
@@ -54,7 +57,11 @@ export class MongoMenuItemsRepository<T> implements MenuItemsGenericRepository<T
     return this._repository.create(item);
   }
   updateItemInStoreAndMenu(id: string, item: T): Promise<T> {
-    return this._repository.findByIdAndUpdate(id, item, { new: true });
+    console.log('updateItemInStoreAndMenu', id, item);
+    return this._repository
+      .findByIdAndUpdate(id, item, { new: true })
+      .populate(this._populateOnFind)
+      .exec() as Promise<T>;
   }
   deleteItemInStoreAndMenu(id: string, secondarySearchCriteria: MenuItemsSearchCriteria) {
     const { pagination, ...criteria } = secondarySearchCriteria;

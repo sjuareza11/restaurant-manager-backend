@@ -57,7 +57,7 @@ export class ProductsController {
   @UseInterceptors(AddStoreIdInterceptor, AddFilesToBodyInterceptor, AddMenuIdInterceptor)
   @Patch(':id')
   update(@Param('id') id: string, @Param('menuId') menuId: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(id, { ...updateProductDto, menuId });
+    return this.productsService.update(id, new UpdateProductDto({ ...updateProductDto, menuId }));
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)

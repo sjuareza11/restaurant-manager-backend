@@ -51,7 +51,7 @@ export class CategoriesService {
     if (categoryByCode && categoryByCode._id !== id) {
       throw new BadRequestException('categoryCodeAlreadyExists');
     }
-    const category = await this.dataService.categories.updateItemInStoreAndMenu(id, updateCategoryDto);
+    const category = await this.dataService.categories.updateItemInStoreAndMenu(id, updateCategoryDto.toEntity());
     if (category && updateCategoryDto.imageFile) {
       return await this.uploaderService.uploadFile(
         new FileDto({

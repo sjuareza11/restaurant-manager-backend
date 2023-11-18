@@ -1,4 +1,4 @@
-import { CategoryEntity } from '@src/menus/domain/entities/category.entity';
+import { ProductEntity } from '@src/menus/domain/entities/product.ts';
 import { UrlFileCreator } from '@src/shared/application/utils/url-file-creator.ts';
 import { HasMimeType } from '@src/shared/application/validators/has-mime-type';
 import { IsFile } from '@src/shared/application/validators/is-file.validator';
@@ -64,7 +64,7 @@ export class CreateProductDto {
     Object.assign(this, partial);
   }
 
-  toEntity(): Partial<CategoryEntity> {
+  toEntity(): Partial<ProductEntity> {
     this._id = this._id ? this._id : generateUUID();
     const dto = new CreateProductDto(this);
     const { imageFile, ...rest } = dto;
