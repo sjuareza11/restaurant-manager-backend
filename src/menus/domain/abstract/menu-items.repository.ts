@@ -1,7 +1,7 @@
 import { MenuItemsSearchCriteria } from '../models/menu-items-search-criteria';
 
 export abstract class MenuItemsGenericRepository<T> {
-  abstract getAllItemsByStoreAndMenu(searchCriteria: MenuItemsSearchCriteria): Promise<T[]>;
+  abstract getAllItemsByStoreAndMenu(searchCriteria: MenuItemsSearchCriteria): Promise<{ items: T[]; total: number }>;
 
   abstract getItemByIdInStoreAndMenu(id: string, secondarySearchCriteria: MenuItemsSearchCriteria): Promise<T>;
 

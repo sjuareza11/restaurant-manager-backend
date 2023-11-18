@@ -50,7 +50,7 @@ export class CategoriesController {
   @UseInterceptors(AddStoreIdInterceptor, AddFilesToBodyInterceptor, AddMenuIdInterceptor)
   @Patch(':id')
   update(@Param('id') id: string, @Param('menuId') menuId: string, @Body() updateMenuDto: UpdateCategoryDto) {
-    return this.categoriesService.update(id, { ...updateMenuDto, menuId });
+    return this.categoriesService.update(id, new UpdateCategoryDto({ ...updateMenuDto, menuId }));
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)

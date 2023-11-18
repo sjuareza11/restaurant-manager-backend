@@ -4,6 +4,7 @@ import { MongoMenuItemsRepository } from './mongo-menu-items.repository';
 
 export class MongoProductRepository<T> extends MongoMenuItemsRepository<T> {
   constructor(repository: Model<T>, populateOnFind: string[] = []) {
+    console.log('populateOnFind', populateOnFind);
     super(repository, populateOnFind);
   }
 
@@ -12,8 +13,8 @@ export class MongoProductRepository<T> extends MongoMenuItemsRepository<T> {
     return this._repository
       .find({ categories: { $in: [categoryId] }, ...criteria })
       .populate(this._populateOnFind)
-      .limit(pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10)
-      .skip(pagination?.offset || parseInt(process.env.PAGINATION_DEFAULT_OFFSET) || 0)
+      .limit(pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT))
+      .skip(pagination?.offset || parseInt(process.env.PAGINATION_DEFAULT_OFFSET))
       .exec();
   }
 }

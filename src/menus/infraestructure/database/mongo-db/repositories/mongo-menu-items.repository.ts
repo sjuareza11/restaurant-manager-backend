@@ -10,13 +10,23 @@ export class MongoMenuItemsRepository<T> implements MenuItemsGenericRepository<T
     this._repository = repository;
     this._populateOnFind = populateOnFind.map((field) => field.toLowerCase());
   }
-  getAllItemsByStoreAndMenu(searchCriteria: MenuItemsSearchCriteria): Promise<T[]> {
+  async getAllItemsByStoreAndMenu(searchCriteria: MenuItemsSearchCriteria): Promise<{ items: T[]; total: number }> {
     const { pagination, ...criteria } = searchCriteria;
-    return this._repository
+    const total = await this._repository.countDocuments({ ...criteria });
+
+    const page = pagination?.offset || parseInt(process.env.PAGINATION_DEFAULT_OFFSET);
+    const limit = pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT);
+    const skip = page > 0 ? (page - 1) * limit : 0;
+    const items = await this._repository
       .find({ ...criteria })
       .populate(this._populateOnFind)
-      .limit(pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10)
-      .skip(pagination?.offset || parseInt(process.env.PAGINATION_DEFAULT_OFFSET) || 0);
+      .limit(limit)
+      .skip(skip)
+      .select('-__v')
+      .sort({ order: 1 })
+      .exec();
+
+    return { items, total };
   }
 
   getItemByIdInStoreAndMenu(id: string, secondarySearchCriteria: MenuItemsSearchCriteria): Promise<T> {
@@ -35,7 +45,12 @@ export class MongoMenuItemsRepository<T> implements MenuItemsGenericRepository<T
     });
   }
 
-  createItemInStoreAndMenu(item: T): Promise<T> {
+  async createItemInStoreAndMenu(item: T): Promise<T> {
+    if (this._populateOnFind.length > 0) {
+      const createdItem = await this._repository.create(item);
+      return this._repository.populate(createdItem, this._populateOnFind as any);
+    }
+
     return this._repository.create(item);
   }
   updateItemInStoreAndMenu(id: string, item: T): Promise<T> {
