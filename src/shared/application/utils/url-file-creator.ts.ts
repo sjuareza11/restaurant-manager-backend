@@ -3,6 +3,10 @@ import { UrlFile } from '../../../couriers/domain/models/url-image-file';
 
 export class UrlFileCreator {
   public static createURLFile(urlFile: UrlFile): string {
-    return FILE_PATH.replace('{{id}}', urlFile.fileId).replace('{{storeId}}', urlFile.storeId);
+    const date = new Date();
+    return FILE_PATH.replace('{{id}}', urlFile.fileId + date.getTime().toString()).replace(
+      '{{storeId}}',
+      urlFile.storeId,
+    );
   }
 }

@@ -12,6 +12,8 @@ export abstract class CourierRepository<T> implements StoreItemsGenericRepositor
 
   abstract deleteByStoreId(itemId: string, storeId: string);
 
+  abstract getItemByCriteria(criteria: Partial<T>): Promise<T>;
+
   abstract create(item: T): Promise<T>;
 
   abstract update(id: string, item: T);

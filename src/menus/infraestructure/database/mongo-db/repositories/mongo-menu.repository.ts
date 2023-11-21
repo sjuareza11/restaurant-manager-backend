@@ -5,12 +5,4 @@ export class MongoMenuRepository<T> extends MongoStoreItemsGenericRepository<T> 
   constructor(repository: Model<T>, populateOnFind: string[] = []) {
     super(repository, populateOnFind);
   }
-
-  getItemByCriteria(criteria: T): Promise<T> {
-    return this._repository
-      .findOne({
-        ...criteria,
-      })
-      .select('-__v');
-  }
 }

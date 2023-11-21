@@ -19,8 +19,8 @@ export class CreateCourierDto {
   @IsString()
   @MinLength(1)
   name: string;
+  @IsOptional()
   @IsString()
-  @MinLength(1)
   surname: string;
   @IsString()
   @IsEmail()

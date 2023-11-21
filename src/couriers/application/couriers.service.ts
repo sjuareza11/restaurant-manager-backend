@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UploaderService } from '@src/shared/domain/abstract/uplodader-service';
 import { FileDto } from '@src/shared/domain/dto/file.dto';
 import { QueryOptionsDto } from '@src/shared/domain/dto/get-all-options.dto';
@@ -14,6 +14,20 @@ export class CouriersService {
   ) {}
 
   async create(createCourierDto: CreateCourierDto) {
+    const courierByCode = await this.dataService.couriers.getItemByCriteria({
+      personalId: createCourierDto.personalId,
+      storeId: createCourierDto.storeId,
+    });
+    const courierByEmail = await this.dataService.couriers.getItemByCriteria({
+      email: createCourierDto.email,
+      storeId: createCourierDto.storeId,
+    });
+
+    if (courierByCode) {
+      throw new BadRequestException('errorCourierPersonalIdAlreadyExist');
+    } else if (courierByEmail) {
+      throw new BadRequestException('errorCourierEmailAlreadyExist');
+    }
     const courier = await this.dataService.couriers.create({
       ...createCourierDto.toEntity(),
     });
@@ -24,12 +38,12 @@ export class CouriersService {
           fullPath: courier.imageUrl,
         }),
       );
-      return courier;
     }
+    return courier;
   }
 
   findAll(storeId: string, options?: QueryOptionsDto) {
-    return this.dataService.couriers.getItemsByStoreId(storeId);
+    return this.dataService.couriers.getItemsByStoreId(storeId, options);
   }
 
   findOne(id: string, storeId: string) {
@@ -37,9 +51,24 @@ export class CouriersService {
   }
 
   async update(id: string, updateCourierDto: UpdateCourierDto) {
-    const courier = await this.dataService.couriers.update(id, updateCourierDto);
+    const courierByCode = await this.dataService.couriers.getItemByCriteria({
+      personalId: updateCourierDto.personalId,
+      storeId: updateCourierDto.storeId,
+    });
+    const courierByEmail = await this.dataService.couriers.getItemByCriteria({
+      email: updateCourierDto.email,
+      storeId: updateCourierDto.storeId,
+    });
+
+    if (courierByCode && courierByCode._id !== id) {
+      throw new BadRequestException('errorCourierPersonalIdAlreadyExist');
+    } else if (courierByEmail && courierByEmail.email !== updateCourierDto.email) {
+      throw new BadRequestException('errorCourierEmailAlreadyExist');
+    }
+    const courier = await this.dataService.couriers.update(id, { ...updateCourierDto.toEntity() });
+    console.log(courier.imageUrl, updateCourierDto.imageFile);
     if (courier && updateCourierDto.imageFile) {
-      return await this.uploaderService.uploadFile(
+      await this.uploaderService.uploadFile(
         new FileDto({
           ...updateCourierDto.imageFile,
           fullPath: courier.imageUrl,

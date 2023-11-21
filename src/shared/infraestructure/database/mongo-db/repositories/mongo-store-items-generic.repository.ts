@@ -32,6 +32,14 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
       .select('-createdAt -updatedAt -__v');
   }
 
+  getItemByCriteria(criteria: T): Promise<T> {
+    return this._repository
+      .findOne({
+        ...criteria,
+      })
+      .select('-__v');
+  }
+
   deleteByStoreId(itemId: string, storeId: string) {
     return this._repository.deleteOne({ _id: itemId, storeId });
   }
