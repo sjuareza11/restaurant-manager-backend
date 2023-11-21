@@ -30,7 +30,7 @@ export class StoresService {
     if (store) {
       if (updateStoreDto.storeMenuServices.some((menuService) => menuService.menuId)) {
         const menusToAssign = await this.getMenusByStoreId({ ...updateStoreDto, _id: store._id });
-        updateStoreDto.storeMenuServices = menusToAssign;
+        updateStoreDto.storeMenuServices = menusToAssign as any;
       }
       const storeUpdated = await this.dataService.stores.update(id, updateStoreDto);
       return storeUpdated;

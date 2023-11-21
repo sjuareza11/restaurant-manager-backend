@@ -18,19 +18,19 @@ import { PaymentMethodsService } from '../application/payment-methods.service';
 import { AddStoreIdInterceptor } from './../../shared/infraestructure/interceptors/add-store-id.interceptor';
 import { AuthStoreMemberGuard } from './../application/guards/auth-store-member.guard';
 
-@Controller('stores/:storeId/payment-methods')
+@Controller()
 export class PaymentMethodsController {
   constructor(private paymentMethodsService: PaymentMethodsService) {}
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @UseInterceptors(AddStoreIdInterceptor)
-  @Post()
+  @Post('stores/:storeId/payment-methods')
   create(@Body() createPaymentMethod: PaymentMethodDto) {
     return this.paymentMethodsService.create(createPaymentMethod);
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
-  @Get()
+  @Get('stores/:storeId/payment-methods')
   findAll(@Req() req: any, @Query() paginationDto: PaginationDto) {
     const storeId = req.user['storeId'];
 
@@ -38,7 +38,7 @@ export class PaymentMethodsController {
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
-  @Get(':id')
+  @Get('stores/:storeId/payment-methods/:id')
   findOne(@Param('id') id: string, @Req() req: any) {
     const storeId = req.user['storeId'];
     return this.paymentMethodsService.findOne(id, storeId);
@@ -46,9 +46,23 @@ export class PaymentMethodsController {
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
   @UseInterceptors(AddStoreIdInterceptor)
-  @Patch(':id')
+  @Patch('stores/:storeId/payment-methods/:id')
   update(@Param('id') id: string, @Body() updatePaymentMethod: PaymentMethodDto) {
     return this.paymentMethodsService.update(id, updatePaymentMethod);
+  }
+
+  @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
+  @UseInterceptors(AddStoreIdInterceptor)
+  @Patch('stores/:storeId/payment-methods-bulk')
+  updatePaymentMethods(@Body() updatePaymentMethod) {
+    return this.paymentMethodsService.updatePaymentMethods(updatePaymentMethod);
+  }
+
+  @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)
+  @UseInterceptors(AddStoreIdInterceptor)
+  @Post('stores/:storeId/payment-methods-bulk')
+  createPaymentMethods(@Body() createPaymentMethods) {
+    return this.paymentMethodsService.createPaymentMethods(createPaymentMethods);
   }
 
   /**

@@ -6,15 +6,19 @@ export class MongoStoreRepository<T> extends MongoGenericRepository<T> {
   }
 
   getStoreByOrganizationId(storeId: string, organizationId: string): Promise<T> {
-    return this._repository.findOne({
-      _id: storeId,
-      organizationId,
-    });
+    return this._repository
+      .findOne({
+        _id: storeId,
+        organizationId,
+      })
+      .select('-createdAt -updatedAt -__v');
   }
   getItemByCode(code: string, organizationId: string): Promise<T> {
-    return this._repository.findOne({
-      code,
-      organizationId,
-    });
+    return this._repository
+      .findOne({
+        code,
+        organizationId,
+      })
+      .select('-createdAt -updatedAt -__v');
   }
 }

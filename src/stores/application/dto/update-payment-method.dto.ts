@@ -1,8 +1,10 @@
 import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
+import { PaymentMethodsConfig } from '@src/stores/domain/enums/payment-methods-config.enum';
 import { IsBoolean, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator';
-import { PaymentMethodEntity } from '../../domain/entities/payment-method';
-import { PaymentMethodsConfig } from './../../domain/enums/payment-methods-config.enum';
-export class PaymentMethodDto implements PaymentMethodEntity {
+
+export class UpdatePaymentMethodDto {
+  @IsUUID(UUID_VERSION)
+  _id: string;
   @IsEnum(PaymentMethodsConfig)
   name: PaymentMethodsConfig;
   @IsOptional()
@@ -11,8 +13,10 @@ export class PaymentMethodDto implements PaymentMethodEntity {
   @IsOptional()
   @IsString()
   publicKey: string;
+  @IsOptional()
   @IsBoolean()
   available: boolean;
+  @IsOptional()
   @IsUUID(UUID_VERSION)
   storeId: string;
 }

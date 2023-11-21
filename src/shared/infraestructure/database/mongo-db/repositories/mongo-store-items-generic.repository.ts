@@ -12,13 +12,13 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
   }
   async getItemsByStoreId(storeId: string, options?: QueryOptionsDto): Promise<{ items: T[]; total: number }> {
     const total = await this._repository.countDocuments({ storeId });
-    console.log('options', options);
 
-    const page = options?.pagination?.offset || 1;
-    const limit = options?.pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10;
-    const skip = (page - 1) * limit;
-
-    const items = await this._repository.find({ storeId }).limit(limit).skip(skip).select('-__v');
+    const page =
+      options?.pagination?.offset > -1 ? options.pagination?.offset : parseInt(process.env.PAGINATION_DEFAULT_OFFSET);
+    const limit =
+      options?.pagination?.limit > -1 ? options.pagination?.limit : parseInt(process.env.PAGINATION_DEFAULT_LIMIT);
+    const skip = page > 0 ? (page - 1) * limit : 0;
+    const items = await this._repository.find({ storeId }).limit(limit).skip(skip).select('-createdAt -updatedAt -__v');
 
     return { items, total };
   }
@@ -29,7 +29,7 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
         _id: itemId,
         storeId,
       })
-      .select('-__v');
+      .select('-createdAt -updatedAt -__v');
   }
 
   deleteByStoreId(itemId: string, storeId: string) {
@@ -41,11 +41,15 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
       .find()
       .limit(options?.pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10)
       .skip(options?.pagination?.offset || parseInt(process.env.PAGINATION_DEFAULT_OFFSET) || 0)
-      .select('-__v');
+      .select('-createdAt -updatedAt -__v');
   }
 
   getById(id: any): Promise<T> {
-    return this._repository.findById(id).populate(this._populateOnFind).select('-__v').exec() as Promise<T>;
+    return this._repository
+      .findById(id)
+      .populate(this._populateOnFind)
+      .select('-createdAt -updatedAt -__v')
+      .exec() as Promise<T>;
   }
 
   create(item: T): Promise<T> {
@@ -53,7 +57,7 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
   }
 
   update(id: string, item: T) {
-    return this._repository.findByIdAndUpdate(id, item, { new: true }).select('-__v');
+    return this._repository.findByIdAndUpdate(id, item, { new: true }).select('-createdAt -updatedAt -__v');
   }
   delete(id: string) {
     return this._repository.findByIdAndDelete(id);

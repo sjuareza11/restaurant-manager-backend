@@ -4,7 +4,6 @@ import { MongoMenuItemsRepository } from './mongo-menu-items.repository';
 
 export class MongoProductRepository<T> extends MongoMenuItemsRepository<T> {
   constructor(repository: Model<T>, populateOnFind: string[] = []) {
-    console.log('populateOnFind', populateOnFind);
     super(repository, populateOnFind);
   }
 

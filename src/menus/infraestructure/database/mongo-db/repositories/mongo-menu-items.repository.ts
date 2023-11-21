@@ -57,7 +57,6 @@ export class MongoMenuItemsRepository<T> implements MenuItemsGenericRepository<T
     return this._repository.create(item);
   }
   updateItemInStoreAndMenu(id: string, item: T): Promise<T> {
-    console.log('updateItemInStoreAndMenu', id, item);
     return this._repository
       .findByIdAndUpdate(id, item, { new: true })
       .populate(this._populateOnFind)

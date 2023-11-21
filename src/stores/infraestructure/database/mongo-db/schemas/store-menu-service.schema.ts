@@ -13,6 +13,8 @@ export class StoreMenuService extends Document implements StoreMenuServiceEntity
     ref: Menu.name,
   })
   menuId: string;
+  @Prop({ type: String })
+  menuName: string;
   @Prop({ type: String, enum: StoreServicesSalesChannel, required: true })
   salesChannel: StoreServicesSalesChannel;
   @Prop({ required: true })
@@ -22,4 +24,3 @@ export class StoreMenuService extends Document implements StoreMenuServiceEntity
 }
 
 export const StoreMenuServiceSchema = SchemaFactory.createForClass(StoreMenuService);
-StoreMenuServiceSchema.set('timestamps', true);
