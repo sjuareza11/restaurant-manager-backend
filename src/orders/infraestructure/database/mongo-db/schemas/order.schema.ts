@@ -40,7 +40,7 @@ export class Order extends Document {
   @Prop({ type: [OrderProductSchema], required: true })
   products: Array<OrderProduct>;
 
-  @Prop({ type: [OrderCourierSchema] })
+  @Prop({ type: OrderCourierSchema })
   courier?: OrderCourier;
 
   @Prop({ type: String, ref: Store.name, required: true })
@@ -56,7 +56,8 @@ export class Order extends Document {
   totalOrderAmount: number;
 
   @Prop({ type: String, ref: OrderCustomer.name, required: true })
-  customerId: string;
+  customer: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
+OrderSchema.set('timestamps', true);

@@ -6,11 +6,13 @@ export class OrderCourier extends Document {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
+  @Prop({})
   surname: string;
 
   @Prop({ required: true })
   phone: string;
+  @Prop({ required: true })
+  personalId: string;
 }
 
 export const OrderCourierSchema = SchemaFactory.createForClass(OrderCourier);

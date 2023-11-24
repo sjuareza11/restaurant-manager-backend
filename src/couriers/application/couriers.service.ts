@@ -66,7 +66,6 @@ export class CouriersService {
       throw new BadRequestException('errorCourierEmailAlreadyExist');
     }
     const courier = await this.dataService.couriers.update(id, { ...updateCourierDto.toEntity() });
-    console.log(courier.imageUrl, updateCourierDto.imageFile);
     if (courier && updateCourierDto.imageFile) {
       await this.uploaderService.uploadFile(
         new FileDto({

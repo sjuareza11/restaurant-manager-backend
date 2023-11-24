@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class AuthStoreMemberGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
     const { storeId } = context.switchToHttp().getRequest().user;
+
     return context.switchToHttp().getRequest().params.storeId === storeId;
   }
 }

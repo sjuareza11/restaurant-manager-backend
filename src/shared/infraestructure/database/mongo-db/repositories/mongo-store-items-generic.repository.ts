@@ -18,7 +18,13 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
     const limit =
       options?.pagination?.limit > -1 ? options.pagination?.limit : parseInt(process.env.PAGINATION_DEFAULT_LIMIT);
     const skip = page > 0 ? (page - 1) * limit : 0;
-    const items = await this._repository.find({ storeId }).limit(limit).skip(skip).select('-createdAt -updatedAt -__v');
+    const items = await this._repository
+      .find({ storeId })
+      .limit(limit)
+      .skip(skip)
+      .select(' -__v')
+      .populate(this._populateOnFind)
+      .exec();
 
     return { items, total };
   }
@@ -29,7 +35,9 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
         _id: itemId,
         storeId,
       })
-      .select('-createdAt -updatedAt -__v');
+      .select(' -__v')
+      .populate(this._populateOnFind)
+      .exec() as Promise<T>;
   }
 
   getItemByCriteria(criteria: T): Promise<T> {
@@ -49,15 +57,11 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
       .find()
       .limit(options?.pagination?.limit || parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10)
       .skip(options?.pagination?.offset || parseInt(process.env.PAGINATION_DEFAULT_OFFSET) || 0)
-      .select('-createdAt -updatedAt -__v');
+      .select(' -__v');
   }
 
   getById(id: any): Promise<T> {
-    return this._repository
-      .findById(id)
-      .populate(this._populateOnFind)
-      .select('-createdAt -updatedAt -__v')
-      .exec() as Promise<T>;
+    return this._repository.findById(id).populate(this._populateOnFind).select(' -__v').exec() as Promise<T>;
   }
 
   create(item: T): Promise<T> {
@@ -65,7 +69,11 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
   }
 
   update(id: string, item: T) {
-    return this._repository.findByIdAndUpdate(id, item, { new: true }).select('-createdAt -updatedAt -__v');
+    return this._repository
+      .findByIdAndUpdate(id, item, { new: true })
+      .select(' -__v')
+      .populate(this._populateOnFind)
+      .exec() as Promise<T>;
   }
   delete(id: string) {
     return this._repository.findByIdAndDelete(id);

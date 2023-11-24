@@ -10,7 +10,6 @@ import {
   IsOptional,
   IsPositive,
   IsUUID,
-  Matches,
   ValidateIf,
   ValidateNested,
 } from 'class-validator';
@@ -41,9 +40,6 @@ export class CreateOrderDto {
   totalOrderAmount: number;
   @ValidateIf((dto: CreateOrderDto) => dto.type === OrderType.TAKE_AWAY)
   @IsDateString()
-  @Matches(/^(\d{2}):(\d{2})$/, {
-    message: 'pickupTime must be a valid time format (HH:mm)',
-  })
   pickupTime?: string;
   @IsEnum(OrderType)
   type: OrderType;

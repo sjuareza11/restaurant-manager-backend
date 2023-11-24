@@ -1,5 +1,5 @@
 export class OrderUtils {
   static genereteOrderNumber(): string {
-    return Date.now() + Math.random().toString();
+    return `PK${Date.now()}` + Math.floor(Math.random() * 1000).toString();
   }
 }

@@ -11,7 +11,7 @@ export class MongoStoreRepository<T> extends MongoGenericRepository<T> {
         _id: storeId,
         organizationId,
       })
-      .select('-createdAt -updatedAt -__v');
+      .select(' -__v');
   }
   getItemByCode(code: string, organizationId: string): Promise<T> {
     return this._repository
@@ -19,6 +19,6 @@ export class MongoStoreRepository<T> extends MongoGenericRepository<T> {
         code,
         organizationId,
       })
-      .select('-createdAt -updatedAt -__v');
+      .select(' -__v');
   }
 }

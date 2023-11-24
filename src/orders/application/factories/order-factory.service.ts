@@ -24,7 +24,7 @@ export class CreateOrderFactoryService implements BaseFactoryService<CreateOrder
       externalOrderId: OrderUtils.genereteOrderNumber(),
       orderAmount: dto.orderAmount,
       totalOrderAmount: dto.totalOrderAmount,
-      customerId: dto.customer._id,
+      customer: dto.customer._id,
     };
   }
 }

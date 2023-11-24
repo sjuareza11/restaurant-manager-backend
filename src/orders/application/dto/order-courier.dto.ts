@@ -1,9 +1,10 @@
-import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
-import { IsMobilePhone, IsString, IsUUID, MinLength } from 'class-validator';
+import { IsDNIOrCIF } from '@src/shared/application/validators/is-dni-or-cif';
+import { IsMobilePhone, IsString, MinLength } from 'class-validator';
 
 export class OrderCourierDto {
-  @IsUUID(UUID_VERSION)
-  courierId: string;
+  @IsString()
+  @IsDNIOrCIF()
+  personalId: string;
   @IsString()
   @MinLength(1)
   name: string;

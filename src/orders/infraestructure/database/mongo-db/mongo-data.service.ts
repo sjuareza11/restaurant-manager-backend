@@ -21,7 +21,7 @@ export class MongoDataService implements DataService {
   ) {}
 
   onApplicationBootstrap() {
-    this.orders = new MongoOrderRepository<Order>(this.OrderRepository);
+    this.orders = new MongoOrderRepository<Order>(this.OrderRepository, ['customer']);
     this.customers = new MongoOrderCustomerRepository<OrderCustomer>(this.CustomerRepository);
   }
 }

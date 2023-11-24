@@ -35,7 +35,7 @@ export class OrdersService {
   }
 
   async update(id: string, updateOrderDto: UpdateOrderDto) {
-    if (updateOrderDto.status !== OrderStatus.PREPARING) {
+    if (updateOrderDto.status !== OrderStatus.PENDING_PICKUP_COURIER) {
       updateOrderDto.courier = undefined;
     }
     const order = this.uptateOrderFactoryService.create(updateOrderDto) as OrderEntity;

@@ -21,5 +21,5 @@ export interface OrderEntity {
   externalOrderId: string;
   orderAmount?: number;
   totalOrderAmount: number;
-  customerId: string;
+  customer: string;
 }
