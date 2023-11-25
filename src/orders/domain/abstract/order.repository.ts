@@ -12,6 +12,8 @@ export abstract class OrderRepository<T> implements StoreItemsGenericRepository<
 
   abstract deleteByStoreId(itemId: string, storeId: string);
 
+  abstract getItemsByCriteria(criteria: T): Promise<T[]>;
+
   abstract create(item: T): Promise<T>;
 
   abstract update(id: string, item: T);
