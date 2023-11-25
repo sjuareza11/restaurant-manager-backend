@@ -11,7 +11,7 @@ import { Order } from './schemas/order.schema';
 
 @Injectable()
 export class MongoDataService implements DataService {
-  orders: OrderRepository<Order>;
+  orders: OrderRepository<any>;
   customers: CustomerRepository<OrderCustomer>;
   constructor(
     @InjectModel(Order.name)

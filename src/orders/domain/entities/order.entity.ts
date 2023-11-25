@@ -22,4 +22,6 @@ export interface OrderEntity {
   orderAmount?: number;
   totalOrderAmount: number;
   customer: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
