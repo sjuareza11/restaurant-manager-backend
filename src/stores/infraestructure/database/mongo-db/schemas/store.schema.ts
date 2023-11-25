@@ -10,7 +10,7 @@ import { StoreMenuService, StoreMenuServiceSchema } from './store-menu-service.s
 export class Store extends Document implements StoreEntity {
   @Prop({ type: String, default: () => generateUUID() })
   _id: string;
-  @Prop({ unique: true })
+  @Prop()
   code: string;
   @Prop({ required: true })
   name: string;
@@ -36,3 +36,4 @@ export class Store extends Document implements StoreEntity {
 }
 export const StoreSchema = SchemaFactory.createForClass(Store);
 StoreSchema.set('timestamps', true);
+StoreSchema.index({ code: 1, organizationId: 1 }, { unique: true, sparse: true });
