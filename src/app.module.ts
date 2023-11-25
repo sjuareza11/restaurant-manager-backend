@@ -6,10 +6,10 @@ import { AuthModule } from './auth/auth.module';
 import { envConfigBuilder } from './config/infraestructure/env-config-builder';
 import { CouriersModule } from './couriers/couriers.module';
 import { MenusModule } from './menus/menus.module';
+import { OrdersModule } from './orders/orders.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { StoresModule } from './stores/stores.module';
 import { UsersModule } from './users/users.module';
-import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { OrdersModule } from './orders/orders.module';
     }),
     AuthModule,
     MongooseModule.forRoot(
-      `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}:${process.env.MONGODB_PORT}`,
+      `${process.env.MONGODB_PROTOCOL}${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}`,
       { dbName: process.env.MONGODB_NAME },
     ),
     UsersModule,
