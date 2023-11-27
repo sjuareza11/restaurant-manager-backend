@@ -1,5 +1,5 @@
 import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
-import { IsInt, IsOptional, IsPositive, IsString, IsUUID, MinLength } from 'class-validator';
+import { IsInt, IsNumber, IsOptional, IsPositive, IsString, IsUUID, MinLength } from 'class-validator';
 
 export class CreateOrderProductDto {
   @IsUUID(UUID_VERSION)
@@ -14,7 +14,7 @@ export class CreateOrderProductDto {
   @IsInt()
   @IsPositive()
   quantity: number;
-  @IsInt()
+  @IsNumber()
   @IsPositive()
   price: number;
   @IsOptional()

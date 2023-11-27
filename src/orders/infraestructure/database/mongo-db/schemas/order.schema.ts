@@ -25,7 +25,7 @@ export class Order extends Document {
   @Prop({ required: true })
   channel: OrderChannel;
 
-  @Prop({ required: true, enum: OrderStatus })
+  @Prop({ required: true, enum: OrderType })
   type: OrderType;
 
   @Prop()
@@ -51,6 +51,9 @@ export class Order extends Document {
 
   @Prop()
   orderAmount?: number;
+
+  @Prop()
+  createdAt: Date;
 
   @Prop({ required: true })
   totalOrderAmount: number;

@@ -45,10 +45,17 @@ export class OrderStatisticsService {
     startDate.setHours(0, 0, 0, 0);
     endDate.setHours(23, 59, 59, 999);
 
-    const orders = await this.getOrdersByCriteria({
-      createdAt: { $gte: startDate, $lte: endDate },
+    const startOfYear = new Date(new Date().getFullYear(), 0, 1);
+    startOfYear.setHours(0, 0, 0, 0);
+    const now = new Date();
+    now.setHours(23, 59, 59, 999);
+
+    const ordersThisYear = await this.getOrdersByCriteria({
+      createdAt: { $gte: startOfYear, $lte: now },
       storeId,
     });
+
+    const orders = ordersThisYear.filter((order) => order.createdAt >= startDate && order.createdAt <= endDate);
 
     const dailyOrders = this.getDailyOrders(orders);
     const monthlyOrders = this.getMonthlyOrders(orders);
@@ -60,16 +67,6 @@ export class OrderStatisticsService {
 
     const ordersByDay = this.groupOrdersByDay(orders);
     const dailyStatistics = this.getDailyStatistics(ordersByDay);
-
-    const startOfYear = new Date(new Date().getFullYear(), 0, 1);
-    startOfYear.setHours(0, 0, 0, 0);
-    const now = new Date();
-    now.setHours(23, 59, 59, 999);
-
-    const ordersThisYear = await this.getOrdersByCriteria({
-      createdAt: { $gte: startOfYear, $lte: now },
-      storeId,
-    });
 
     const annualOrderAmount = this.getOrderAmount(ordersThisYear);
 

@@ -27,7 +27,7 @@ export class OrdersService {
   }
 
   findAll(storeId: string, options?: QueryOptionsDto) {
-    return this.dataService.orders.getItemsByStoreId(storeId);
+    return this.dataService.orders.getItemsByStoreId(storeId, options);
   }
 
   findOne(id: string, storeId: string) {
