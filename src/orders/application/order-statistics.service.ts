@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { format, isThisMonth, isToday } from 'date-fns';
+import { differenceInDays, format, isThisMonth, isToday } from 'date-fns';
 import { DataService } from '../domain/abstract/data-service';
 
 @Injectable()
@@ -50,36 +50,27 @@ export class OrderStatisticsService {
     const now = new Date();
     now.setHours(23, 59, 59, 999);
 
-    const ordersThisYear = await this.getOrdersByCriteria({
-      createdAt: { $gte: startOfYear, $lte: now },
+    const orders = await this.getOrdersByCriteria({
+      createdAt: { $gte: startDate, $lte: endDate },
       storeId,
     });
 
-    const orders = ordersThisYear.filter((order) => order.createdAt >= startDate && order.createdAt <= endDate);
-
     const dailyOrders = this.getDailyOrders(orders);
-    const monthlyOrders = this.getMonthlyOrders(orders);
-    const monthlyOrderAmount = this.getOrderAmount(monthlyOrders);
-
+    const diffInDays = differenceInDays(endDate, startDate);
     const ordersBetweenDates = orders.length;
     const orderAmountBetweenDates = this.getOrderAmount(orders);
     const averageOrderAmount = orderAmountBetweenDates / ordersBetweenDates;
-
+    const averageOrdersPerDay = ordersBetweenDates / diffInDays;
     const ordersByDay = this.groupOrdersByDay(orders);
     const dailyStatistics = this.getDailyStatistics(ordersByDay);
 
-    const annualOrderAmount = this.getOrderAmount(ordersThisYear);
-
     return {
       dailyOrders,
-      monthlyOrderAmount,
-      monthlyOrders: monthlyOrders.length,
-      annualOrderAmount,
       ordersBetweenDates,
       orderAmountBetweenDates,
       dailyStatistics,
       averageOrderAmount,
-      ordersThisYear: ordersThisYear.length,
+      averageOrdersPerDay,
     };
   }
 }
