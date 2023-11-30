@@ -1,14 +1,44 @@
 version: '3.8'
 
 services:
+  backend:
+    container_name: nestjs-backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - MONGODB_PROTOCOL=${MONGODB_PROTOCOL}
+      - MONGODB_HOST=${MONGODB_HOST}
+      - MONGODB_NAME=${MONGODB_NAME}
+      - MONGODB_USERNAME=${MONGODB_USERNAME}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION_TIME=${JWT_EXPIRATION_TIME}
+      - JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET}
+      - JWT_REFRESH_TOKEN_EXPIRATION_TIME=${JWT_REFRESH_TOKEN_EXPIRATION_TIME}
+      - PAGINATION_DEFAULT_LIMIT=${PAGINATION_DEFAULT_LIMIT}
+      - PAGINATION_DEFAULT_OFFSET=${PAGINATION_DEFAULT_OFFSET}
+      - AWS_S3_BUCKET=${AWS_S3_BUCKET}
+      - AWS_S3_REGION=${AWS_S3_REGION}
+      - AWS_S3_ACCESS_KEY_ID=${AWS_S3_ACCESS_KEY_ID}
+      - AWS_S3_SECRET_ACCESS_KEY=${AWS_S3_SECRET_ACCESS_KEY}
+      - AWS_S3_UPLOAD_FILES_FOLDER=${AWS_S3_UPLOAD_FILES_FOLDER}
+      - HEADER_KEY_API_KEY=${HEADER_KEY_API_KEY}
+      - API_KEY=${API_KEY}
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - mongo-db
+
   mongo-db:
+    container_name: mongo-database
     image: mongo:5
     restart: always
     ports:
       - 27017:27017
     environment:
-      MONGODB_DATABASE: restaurant-manager
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGODB_DATABASE: ${MONGODB_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
     volumes:
       - ./mongo:/data/db
