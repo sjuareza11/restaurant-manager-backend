@@ -29,7 +29,7 @@
 ## Installation
 
 ```bash
-$ npm install
+$ npm install --force
 ```
 
 ## Running the app
@@ -71,3 +71,23 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+## Running Docker Applications
+
+To run the Docker applications, you will need to have Docker and Docker Compose installed on your machine. Once installed, you can follow the steps below:
+
+1. Create and configure the `.env` file based on the `.env.example` file. Make sure to replace the placeholders with your actual data.
+
+
+2. Build the Docker images using the following command:
+
+```bash
+docker-compose build
+```
+
+3. Once the images are built, you can run the Docker containers using the following command:
+
+```bash
+docker-compose up -d
+```

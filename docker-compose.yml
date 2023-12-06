@@ -1,6 +1,18 @@
 version: '3.8'
 
 services:
+  mongo-db:
+    container_name: mongo-database
+    image: mongo:5
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGODB_DATABASE: ${MONGODB_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+    volumes:
+      - ./mongo:/data/db
   backend:
     container_name: nestjs-backend
     build:
@@ -8,7 +20,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - MONGODB_PROTOCOL=${MONGODB_PROTOCOL}
-      - MONGODB_HOST=${MONGODB_HOST}
+      - MONGODB_HOST=mongo-db
       - MONGODB_NAME=${MONGODB_NAME}
       - MONGODB_USERNAME=${MONGODB_USERNAME}
       - MONGODB_PASSWORD=${MONGODB_PASSWORD}
@@ -29,16 +41,3 @@ services:
       - ${PORT}:${PORT}
     depends_on:
       - mongo-db
-
-  mongo-db:
-    container_name: mongo-database
-    image: mongo:5
-    restart: always
-    ports:
-      - 27017:27017
-    environment:
-      MONGODB_DATABASE: ${MONGODB_NAME}
-      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
-    volumes:
-      - ./mongo:/data/db
