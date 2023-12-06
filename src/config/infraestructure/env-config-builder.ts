@@ -13,4 +13,5 @@ export const envConfigBuilder: () => EnvironmentConfiguration = () => ({
   paginationDefaultLimit: parseInt(process.env.PAGINATION_DEFAULT_LIMIT) || 10,
   paginationDefaultOffset: parseInt(process.env.PAGINATION_DEFAULT_OFFSET) || 0,
   awsConfig: envAWSConfig(),
+  corsOrigin: process.env.CORS_ORIGIN.split(',') || [],
 });

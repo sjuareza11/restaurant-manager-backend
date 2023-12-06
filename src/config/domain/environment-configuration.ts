@@ -12,4 +12,5 @@ export interface EnvironmentConfiguration {
   readonly authConfig: AuthConfig;
   readonly awsConfig: EnvAWSConfig;
   readonly port: number;
+  readonly corsOrigin: string[];
 }
