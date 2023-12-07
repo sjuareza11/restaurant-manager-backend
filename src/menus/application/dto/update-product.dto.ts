@@ -75,7 +75,7 @@ export class UpdateProductDto {
             storeId: dto.storeId,
             fileId: dto._id,
           })
-        : null,
+        : this.imageUrl,
     };
   }
 }
