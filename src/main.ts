@@ -9,7 +9,7 @@ async function bootstrap() {
     cors: {
       origin: [...(process.env.CORS_ORIGIN.split(',') || [])],
       credentials: true,
-      methods: ['POST', 'PUT', 'DELETE', 'GET'],
+      methods: ['POST', 'PATCH', 'DELETE', 'GET'],
     },
   });
   app.useGlobalPipes(
