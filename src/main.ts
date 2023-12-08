@@ -4,9 +4,13 @@ import { json, urlencoded } from 'body-parser';
 import * as fileUpload from 'express-fileupload';
 import { AppModule } from './app.module';
 async function bootstrap() {
-  console.log('CORS: ', process.env.CORS_ORIGIN);
+  console.log('CORS: ', [...(process.env.CORS_ORIGIN.split(',') || [])]);
   const app = await NestFactory.create(AppModule, {
-    cors: true,
+    cors: {
+      origin: [...(process.env.CORS_ORIGIN.split(',') || [])],
+      credentials: true,
+      methods: ['POST', 'PUT', 'DELETE', 'GET'],
+    },
   });
   app.useGlobalPipes(
     new ValidationPipe({
