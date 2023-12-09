@@ -37,6 +37,7 @@ export class MongoMenuItemsRepository<T> implements MenuItemsGenericRepository<T
         ...criteria,
       })
       .populate(this._populateOnFind)
+      .sort({ updatedAt: -1 })
       .exec() as Promise<T>;
   }
 

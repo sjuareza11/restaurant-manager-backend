@@ -23,6 +23,7 @@ export class MongoStoreItemsGenericRepository<T> implements StoreItemsGenericRep
       .limit(limit)
       .skip(skip)
       .select(' -__v')
+      .sort({ updatedAt: -1 })
       .populate(this._populateOnFind)
       .exec();
 
