@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CreateOrderFactoryService } from './application/factories/order-factory.service';
 import { OrderProductFactoryService } from './application/factories/order-product-factory.service';
+import { OrderStatisticsFactoryService } from './application/factories/order-statistics-factory.service';
 import { UpdateOrderFactoryService } from './application/factories/update-order-factory.service';
 import { OrderStatisticsService } from './application/order-statistics.service';
 import { OrdersService } from './application/orders.service';
@@ -28,6 +29,7 @@ import { Order, OrderSchema } from './infraestructure/database/mongo-db/schemas/
     CreateOrderFactoryService,
     UpdateOrderFactoryService,
     OrderProductFactoryService,
+    OrderStatisticsFactoryService,
     OrderStatisticsService,
   ],
 })
