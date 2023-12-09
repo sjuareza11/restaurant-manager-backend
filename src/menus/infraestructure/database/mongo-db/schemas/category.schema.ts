@@ -13,7 +13,7 @@ export class Category extends Document implements CategoryEntity {
   name: string;
   @Prop()
   description: string;
-  @Prop({ required: true, unique: true, index: true })
+  @Prop({ required: true })
   code: string;
   @Prop({ default: true })
   available: boolean;
@@ -34,6 +34,8 @@ export class Category extends Document implements CategoryEntity {
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
+CategorySchema.set('timestamps', true);
+CategorySchema.index({ code: 1, storeId: 1 }, { unique: true, sparse: true });
 CategorySchema.pre('save', function (next) {
   if (this.isNew && !this.order) {
     this.model(Category.name)

@@ -12,7 +12,6 @@ export class PaymentMethod extends Document implements PaymentMethodEntity {
     type: String,
     enum: PaymentMethodsConfig,
     required: true,
-    unique: true,
   })
   name: PaymentMethodsConfig;
   @Prop()
@@ -29,3 +28,5 @@ export class PaymentMethod extends Document implements PaymentMethodEntity {
 }
 
 export const PaymentMethodSchema = SchemaFactory.createForClass(PaymentMethod);
+PaymentMethodSchema.set('timestamps', true);
+PaymentMethodSchema.index({ code: 1, organizationId: 1 }, { unique: true, sparse: true });

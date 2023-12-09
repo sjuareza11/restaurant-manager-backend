@@ -39,7 +39,8 @@ export class Product extends Document implements ProductEntity {
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
-
+ProductSchema.set('timestamps', true);
+ProductSchema.index({ code: 1, storeId: 1 }, { unique: true, sparse: true });
 ProductSchema.pre('save', function (next) {
   if (this.isNew && !this.order) {
     this.model(Product.name)

@@ -29,3 +29,5 @@ export class Courier extends Document implements CourierEntity {
 }
 
 export const CourierSchema = SchemaFactory.createForClass(Courier);
+CourierSchema.set('timestamps', true);
+CourierSchema.index({ personalId: 1, storeId: 1 }, { unique: true, sparse: true });
