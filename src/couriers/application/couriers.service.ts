@@ -5,12 +5,16 @@ import { QueryOptionsDto } from '@src/shared/domain/dto/get-all-options.dto';
 import { DataService } from '../domain/abstract/data-service';
 import { CreateCourierDto } from './dto/create-courier.dto';
 import { UpdateCourierDto } from './dto/update-courier.dto';
+import { CreateCourierFactoryService } from './factories/create-courier-factory.service';
+import { UpdateCourierFactoryService } from './factories/update-courier-factory.service';
 
 @Injectable()
 export class CouriersService {
   constructor(
     private dataService: DataService,
     private uploaderService: UploaderService,
+    private createCourierFactoryService: CreateCourierFactoryService,
+    private updateCourierFactoryService: UpdateCourierFactoryService,
   ) {}
 
   async create(createCourierDto: CreateCourierDto) {
@@ -28,16 +32,10 @@ export class CouriersService {
     } else if (courierByEmail) {
       throw new BadRequestException('errorCourierEmailAlreadyExist');
     }
-    const courier = await this.dataService.couriers.create({
-      ...createCourierDto.toEntity(),
-    });
+    const courierToInsert = this.createCourierFactoryService.create(createCourierDto);
+    const courier = await this.dataService.couriers.create(courierToInsert);
     if (courier && createCourierDto.imageFile) {
-      await this.uploaderService.uploadFile(
-        new FileDto({
-          ...createCourierDto.imageFile,
-          fullPath: courier.imageUrl,
-        }),
-      );
+      await this.uploaderService.uploadFile(new FileDto({ ...createCourierDto.imageFile, fullPath: courier.imageUrl }));
     }
     return courier;
   }
@@ -65,14 +63,10 @@ export class CouriersService {
     } else if (courierByEmail && courierByEmail.email !== updateCourierDto.email) {
       throw new BadRequestException('errorCourierEmailAlreadyExist');
     }
-    const courier = await this.dataService.couriers.update(id, { ...updateCourierDto.toEntity() });
+    const courierToUpdate = this.updateCourierFactoryService.create(updateCourierDto);
+    const courier = await this.dataService.couriers.update(id, courierToUpdate);
     if (courier && updateCourierDto.imageFile) {
-      await this.uploaderService.uploadFile(
-        new FileDto({
-          ...updateCourierDto.imageFile,
-          fullPath: courier.imageUrl,
-        }),
-      );
+      await this.uploaderService.uploadFile(new FileDto({ ...updateCourierDto.imageFile, fullPath: courier.imageUrl }));
     }
     return courier;
   }

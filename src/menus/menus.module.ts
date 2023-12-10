@@ -4,6 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UploaderService } from '@shared/domain/abstract/uplodader-service';
 import { S3UploaderService } from '@src/shared/infraestructure/storage/s3-uploader/s3-uploader.service';
 import { CategoriesService } from './application/categories.service';
+import { CreateCategoryFactoryService } from './application/factories/create-category-factory.service';
+import { CreateProductFactoryService } from './application/factories/create-product-factory.service';
+import { UpdateCategoryFactoryService } from './application/factories/update-category-factory.service';
+import { UpdateProductFactoryService } from './application/factories/update-product-factory.service';
 import { MenusService } from './application/menus.service';
 import { ProductsService } from './application/products.service';
 import { CategoriesController } from './controllers/categories.controller';
@@ -38,6 +42,10 @@ import { Product, ProductSchema } from './infraestructure/database/mongo-db/sche
       provide: UploaderService,
       useClass: S3UploaderService,
     },
+    CreateCategoryFactoryService,
+    UpdateCategoryFactoryService,
+    CreateProductFactoryService,
+    UpdateProductFactoryService,
   ],
 })
 export class MenusModule {}

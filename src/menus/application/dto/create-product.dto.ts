@@ -1,10 +1,8 @@
-import { ProductEntity } from '@src/menus/domain/entities/product.ts';
-import { UrlFileCreator } from '@src/shared/application/utils/url-file-creator.ts';
 import { HasMimeType } from '@src/shared/application/validators/has-mime-type';
 import { IsFile } from '@src/shared/application/validators/is-file.validator';
 import { MaxFileSize } from '@src/shared/application/validators/max-file-size.validator';
 import { UploadFile } from '@src/shared/domain/models/upload-file';
-import { UUID_VERSION, generateUUID } from '@src/shared/domain/utils/uuid';
+import { UUID_VERSION } from '@src/shared/domain/utils/uuid';
 import { FileUtils } from '@src/shared/utils/file.utils';
 import {
   IsArray,
@@ -62,20 +60,5 @@ export class CreateProductDto {
 
   constructor(partial: Partial<CreateProductDto>) {
     Object.assign(this, partial);
-  }
-
-  toEntity(): Partial<ProductEntity> {
-    this._id = this._id ? this._id : generateUUID();
-    const dto = new CreateProductDto(this);
-    const { imageFile, ...rest } = dto;
-    return {
-      ...rest,
-      imageUrl: this.imageFile
-        ? UrlFileCreator.createURLFile({
-            storeId: dto.storeId,
-            fileId: dto._id,
-          })
-        : undefined,
-    };
   }
 }

@@ -5,12 +5,16 @@ import { DataService } from '../domain/abstract/data-service.ts';
 import { MenuItemsSearchCriteria } from '../domain/models/menu-items-search-criteria';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CreateCategoryFactoryService } from './factories/create-category-factory.service.js';
+import { UpdateCategoryFactoryService } from './factories/update-category-factory.service.js';
 
 @Injectable()
 export class CategoriesService {
   constructor(
     private dataService: DataService,
     private uploaderService: UploaderService,
+    private createCategoryFactoryService: CreateCategoryFactoryService,
+    private updateCategoryFactoryService: UpdateCategoryFactoryService,
   ) {}
 
   findAll(searchCriteria: MenuItemsSearchCriteria) {
@@ -29,15 +33,11 @@ export class CategoriesService {
     if (categoryByCode) {
       throw new BadRequestException('categoryCodeAlreadyExists');
     }
-    const newCategory = await this.dataService.categories.createItemInStoreAndMenu({
-      ...createCategoryDto.toEntity(),
-    });
+    const categoryToInsert = this.createCategoryFactoryService.create(createCategoryDto);
+    const newCategory = await this.dataService.categories.createItemInStoreAndMenu(categoryToInsert);
     if (newCategory && createCategoryDto.imageFile) {
       await this.uploaderService.uploadFile(
-        new FileDto({
-          ...createCategoryDto.imageFile,
-          fullPath: newCategory.imageUrl,
-        }),
+        new FileDto({ ...createCategoryDto.imageFile, fullPath: newCategory.imageUrl }),
       );
     }
     return newCategory;
@@ -51,13 +51,11 @@ export class CategoriesService {
     if (categoryByCode && categoryByCode._id !== id) {
       throw new BadRequestException('categoryCodeAlreadyExists');
     }
-    const category = await this.dataService.categories.updateItemInStoreAndMenu(id, updateCategoryDto.toEntity());
+    const categoryToUpdate = this.updateCategoryFactoryService.create(updateCategoryDto);
+    const category = await this.dataService.categories.updateItemInStoreAndMenu(id, categoryToUpdate);
     if (category && updateCategoryDto.imageFile) {
-      return await this.uploaderService.uploadFile(
-        new FileDto({
-          ...updateCategoryDto.imageFile,
-          fullPath: category.imageUrl,
-        }),
+      await this.uploaderService.uploadFile(
+        new FileDto({ ...updateCategoryDto.imageFile, fullPath: category.imageUrl }),
       );
     }
     return category;

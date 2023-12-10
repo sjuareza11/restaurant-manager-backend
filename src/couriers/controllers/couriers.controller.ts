@@ -49,7 +49,7 @@ export class CouriersController {
   @UseInterceptors(AddStoreIdInterceptor, AddFilesToBodyInterceptor)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCourierDto: UpdateCourierDto) {
-    return this.couriersService.update(id, new UpdateCourierDto({ ...updateCourierDto }));
+    return this.couriersService.update(id, new UpdateCourierDto({ ...updateCourierDto, _id: id }));
   }
 
   @UseGuards(AccessTokenGuard, AuthStoreMemberGuard)

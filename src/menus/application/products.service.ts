@@ -3,16 +3,18 @@ import { UploaderService } from '@src/shared/domain/abstract/uplodader-service';
 import { FileDto } from '@src/shared/domain/dto/file.dto';
 import { DataService } from '../domain/abstract/data-service.ts.js';
 import { MenuItemsSearchCriteria } from '../domain/models/menu-items-search-criteria.js';
-import { CategoriesService } from './categories.service.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
 import { UpdateProductDto } from './dto/update-product.dto.js';
+import { CreateProductFactoryService } from './factories/create-product-factory.service';
+import { UpdateProductFactoryService } from './factories/update-product-factory.service.js';
 
 @Injectable()
 export class ProductsService {
   constructor(
     private dataService: DataService,
     private uploaderService: UploaderService,
-    private categoriesService: CategoriesService,
+    private createProductFactoryService: CreateProductFactoryService,
+    private updateProductFactoryService: UpdateProductFactoryService,
   ) {}
 
   finAll(searchCriteria: MenuItemsSearchCriteria) {
@@ -35,15 +37,11 @@ export class ProductsService {
     if (productByCode) {
       throw new BadRequestException('categoryCodeAlreadyExists');
     }
-    const newProduct = await this.dataService.products.createItemInStoreAndMenu({
-      ...createProductDto.toEntity(),
-    });
+    const productToInsert = this.createProductFactoryService.create(createProductDto);
+    const newProduct = await this.dataService.products.createItemInStoreAndMenu(productToInsert);
     if (newProduct && createProductDto.imageFile) {
-      const response = await this.uploaderService.uploadFile(
-        new FileDto({
-          ...createProductDto.imageFile,
-          fullPath: newProduct.imageUrl,
-        }),
+      await this.uploaderService.uploadFile(
+        new FileDto({ ...createProductDto.imageFile, fullPath: newProduct.imageUrl }),
       );
     }
 
@@ -58,14 +56,10 @@ export class ProductsService {
     if (productByCode && productByCode._id !== id) {
       throw new BadRequestException('productCodeAlreadyExists');
     }
-    const product = await this.dataService.products.updateItemInStoreAndMenu(id, { ...updateProductDto.toEntity() });
+    const productToUpdate = this.createProductFactoryService.create(updateProductDto);
+    const product = await this.dataService.products.updateItemInStoreAndMenu(id, productToUpdate);
     if (product && updateProductDto.imageFile) {
-      await this.uploaderService.uploadFile(
-        new FileDto({
-          ...updateProductDto.imageFile,
-          fullPath: product.imageUrl,
-        }),
-      );
+      await this.uploaderService.uploadFile(new FileDto({ ...updateProductDto.imageFile, fullPath: product.imageUrl }));
     }
     return product;
   }
