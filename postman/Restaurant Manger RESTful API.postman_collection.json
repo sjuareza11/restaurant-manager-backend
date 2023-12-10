@@ -1,0 +1,1712 @@
+{
+	"info": {
+		"_postman_id": "fce47986-ab8e-481d-b548-e9c7d8adb4cb",
+		"name": "Restaurant Manger RESTful API",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these request types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a variable called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Tests\" tab**\n\nTests help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/b5f280a7-4b09-48ec-857f-0a7ed99d7ef8/U2NyZWVuc2hvdCAyMDIzLTAzLTI3IGF0IDkuNDcuMjggUE0ucG5n\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n- Add more scripts in \"Tests\" to verify if the API works as expected and execute flows.\n    \n\n## ℹ️ Resources\n\n[Building requests](https://learning.postman.com/docs/sending-requests/requests/)  \n[Authorizing requests](https://learning.postman.com/docs/sending-requests/authorization/)  \n[Using variables](https://learning.postman.com/docs/sending-requests/variables/)  \n[Managing environments](https://learning.postman.com/docs/sending-requests/managing-environments/)  \n[Writing scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29811702"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"surname\": \"Doe\",\n  \"phone\": \"+34654321098\",\n  \"password\": \"P@ssw0rd1!\",\n  \"email\": \"john10.doe@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjMGI1ZWI0YS0wNDM5LTQxZWYtYjU5Zi1jNWZhNThkOTAzNTMiLCJlbWFpbCI6ImpvaG4yLmRvZUBleGFtcGxlLmNvbSIsImlhdCI6MTY5OTM0OTM1NywiZXhwIjoxNjk5MzUxMTU3fQ.HJNQnR2qNo4GpzffhTbV1abGcH0Ru_zp70nd4yVBFaQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Cobra\",\n  \"surname\": \"Doe\",\n  \"phone\": \"+34654321098\",\n  \"password\": \"P@ssw0rd!\",\n  \"email\": \"john2.doe@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/c0b5eb4a-0439-41ef-b59f-c5fa58d90353",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"c0b5eb4a-0439-41ef-b59f-c5fa58d90353"
+							]
+						},
+						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Get users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/info?id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"info"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "SignUp",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John 1\",\n  \"surname\": \"Doe\",\n  \"phone\": \"+34654321098\",\n  \"password\": \"P@ssw0rd!\",\n  \"email\": \"john2d14.doe@example.com\",\n  \"legalTermsAndConditions\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNjk5MzUwMTI5LCJleHAiOjE2OTkzNTE5Mjl9.BGt7Is9G4qXJWGRVwIq58za6-WyB3XNrsahwKDQtH8g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"12345678Aa@\",\n  \"email\": \"a1@a.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signin",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTQ2NzQ0NGY1ZTI0NTU4YjJmMGEwZWMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNjk5MTE2Mjg3LCJleHAiOjE2OTkxMTgwODd9.uGZrQNIgkGRnLdCV---vfRQw700r79CaNPKykQubPUM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"P@ssw0rd!\",\n  \"email\": \"john123456.doe@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "RefreshToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTQ4YjcxODQxYTczMDhlM2E5NjA3OGEiLCJ1c2VyRGF0YSI6eyJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiI2NTQ5MGE2ZjU4ZDkzZWUzZmUzNmRhZTQiLCJzdG9yZUlkIjoiNjU0OTUyMjhmMGI3ZmUwYzZiNTg3MmY2In0sImlhdCI6MTY5OTMwNDIyNywiZXhwIjoxNjk5MzkwNjI3fQ.PBGSeHFADBfkP2wszH2ipqJNrFbQtOCjnLfvrsByGZE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Organizations",
+			"item": [
+				{
+					"name": "Create Organization",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNjk5MzUwMTI5LCJleHAiOjE2OTkzNTE5Mjl9.BGt7Is9G4qXJWGRVwIq58za6-WyB3XNrsahwKDQtH8g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"taxId\": \"C1417242121\",\r\n  \"name\": \"My Organization\",\r\n  \"address\": {\r\n    \"name\": \"123 Main Street\",\r\n    \"latitude\": 40.712784,\r\n    \"longitude\": -74.005941,\r\n    \"zip\": 10001,\r\n    \"city\": \"New York\",\r\n    \"province\": \"NY\"\r\n  },\r\n  \"email\": \"myorg12@myorganization.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/organizations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify Organization",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJpYXQiOjE2OTkzNTAzMDYsImV4cCI6MTY5OTM1MjEwNn0.j6kykZMDrQWQbowP4Lfysw68RhrpqiqSBhPZ9Wl0yCE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"taxId\": \"A12345678\",\r\n  \"name\": \"My Organization 18\",\r\n  \"address\": {\r\n    \"name\": \"123 Main Street 18\",\r\n    \"latitude\": 40.712784,\r\n    \"longitude\": -74.005941,\r\n    \"zip\": 10003,\r\n    \"city\": \"New York 18\",\r\n    \"province\": \"NY\"\r\n  },\r\n  \"email\": \"my-org18@myorganization.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/organizations/bdcb2b78-9c4b-4c3f-8a4a-dd3108662baf",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"organizations",
+								"bdcb2b78-9c4b-4c3f-8a4a-dd3108662baf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stores",
+			"item": [
+				{
+					"name": "Payment Methods",
+					"item": [
+						{
+							"name": "Get Payment Method",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5MzUxMDcxLCJleHAiOjE2OTkzNTI4NzF9.Qu5EtTygMiRD-hALHfFedtBt69ZtJ9UfdplN96cHA3Q",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/payment-methods/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+										"payment-methods",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Payment Method",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5Mzc3NjAyLCJleHAiOjE2OTkzNzk0MDJ9.4_e8w6CEqzUbeSa1uCNm--NZqmKwxwSlnzCcqpoZH0E",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": 4,\r\n  \"privateKey\": \"sk_test_4eC39HqLyjWDarjtT1zdp7dc\",\r\n  \"publicKey\": \"pk_test_4eC39HqLyjWDarjtT1zdp7dc\",\r\n  \"available\": true,\r\n  \"storeId\": \"63a27467-195c-400a-b49d-898395d2b676\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/payment-methods/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+										"payment-methods",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Payment Method",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTQ4YjcxODQxYTczMDhlM2E5NjA3OGEiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiI2NTQ5MGE2ZjU4ZDkzZWUzZmUzNmRhZTQiLCJzdG9yZUlkIjoiNjU0OTUzYjk3MjJiZDkwMmQzNDJiZTJjIiwiaWF0IjoxNjk5MzQwNDM5LCJleHAiOjE2OTkzNDIyMzl9.nggkvVC6ot3zPgHPFZ4EUUJ1IpeDsp8yw2BlFNGV6Yg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": 1,\r\n  \"privateKey\": \"sk_test_4eC39HqLyjWDarjtT1zdp7dc\",\r\n  \"publicKey\": \"pk_test_4eC39HqLyjWDarjtT1zdp7dc\",\r\n  \"available\": true,\r\n  \"storeId\": \"63a27467-195c-400a-b49d-898395d2b676\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/stores/654953b9722bd902d342be2c/payment-methods/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"654953b9722bd902d342be2c",
+										"payment-methods",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"code\": \"1233\",\r\n  \"name\": \"Tienda de comestibles\",\r\n  \"available\": true,\r\n  \"shippingCosts\":[ {\r\n    \"fromPrice\": 100,\r\n    \"toPrice\": 200,\r\n    \"cost\": 50\r\n  }],\r\n     \"address\": {\r\n        \"name\": \"123 Main Street\",\r\n        \"latitude\": \"40.712784\",\r\n        \"longitude\": \"-74.005941\",\r\n        \"zip\": 10001,\r\n        \"city\": \"New York\",\r\n        \"province\": \"NY\"\r\n    },\r\n  \"organizationId\": \"bdcb2b78-9c4b-4c3f-8a4a-dd3108662baf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/stores",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"code\": \"123\",\r\n  \"name\": \"Tienda de comestibles 12\",\r\n  \"available\": true,\r\n  \"shippingCosts\":[ ],\r\n     \"address\": {\r\n        \"name\": \"123 Main Street\",\r\n        \"latitude\": \"40.712784\",\r\n        \"longitude\": \"-74.005941\",\r\n        \"zip\": 10001,\r\n        \"city\": \"New York\",\r\n        \"province\": \"NY\"\r\n    },\r\n\"storeMenuServices\":[{\r\n  \"menuId\": \"a673336b-366a-41fe-9a71-83303da1aa5f\",\r\n  \"salesChannel\": \"take-away\",\r\n  \"minimumOrderAmount\": 50,\r\n  \"available\": true\r\n}],\r\n  \"organizationId\": \"65490a6f58d93ee3fe36dae4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores",
+								"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJpYXQiOjE2OTkzNTAzMDYsImV4cCI6MTY5OTM1MjEwNn0.j6kykZMDrQWQbowP4Lfysw68RhrpqiqSBhPZ9Wl0yCE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores",
+								"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Couriers",
+			"item": [
+				{
+					"name": "Create Courier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NDMzMjQ0LCJleHAiOjM0Mjc0MzMyNDR9.qHAsor1KYbAEY-3YiERcISTSeVziHEiKkOVy0zNUk28",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "personalId",
+									"value": "12564789Y",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Frank",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Grimes",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "frankgrimes1@correo.com",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+34623456789",
+									"type": "text"
+								},
+								{
+									"key": "available",
+									"value": "true",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "storeId",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "imageFile",
+									"type": "file",
+									"src": "/C:/Users/sjuarez/Pictures/descarga.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/couriers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores",
+								"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+								"couriers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Courier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NDMzMjQ0LCJleHAiOjM0Mjc0MzMyNDR9.qHAsor1KYbAEY-3YiERcISTSeVziHEiKkOVy0zNUk28",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "personalId",
+									"value": "12564789Y",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Frank",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Grimes",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "frankgrimes1@correo.com",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+34623456789",
+									"type": "text"
+								},
+								{
+									"key": "available",
+									"value": "true",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "storeId",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "imageFile",
+									"type": "file",
+									"src": "/C:/Users/sjuarez/Downloads/crash/descarga (10).jpg",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/couriers/5bc2b9d7-0d46-46df-87db-97ad3202ad91",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores",
+								"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+								"couriers",
+								"5bc2b9d7-0d46-46df-87db-97ad3202ad91"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Couriers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5Mzc5NTM2LCJleHAiOjE2OTkzODEzMzZ9.822rdpfdRL650Zcm061f2c0SlEBAnmgJqUWxL9kaZoQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/couriers/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores",
+								"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+								"couriers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Courier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NDMzMjQ0LCJleHAiOjM0Mjc0MzMyNDR9.qHAsor1KYbAEY-3YiERcISTSeVziHEiKkOVy0zNUk28",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id\": \"19fb4491-fac4-4fbd-8257-5f421fbb6082\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/couriers/cf2a3ccd-ddc9-4ffd-94dc-9c4ffd4fcaba",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores",
+								"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+								"couriers",
+								"cf2a3ccd-ddc9-4ffd-94dc-9c4ffd4fcaba"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Menus",
+			"item": [
+				{
+					"name": "Categories",
+					"item": [
+						{
+							"name": "Create Category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "menuId",
+											"value": "a673336b-366a-41fe-9a71-83303da1aa5f",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Entrantes",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Los mejores entrantes",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "4.ENTRANTES.2934",
+											"type": "text"
+										},
+										{
+											"key": "available",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "imageFile",
+											"type": "file",
+											"src": "/C:/Users/sjuarez/Downloads/Combo_de_Entrantes-3137.png"
+										},
+										{
+											"key": "order",
+											"value": "3",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/menus/a673336b-366a-41fe-9a71-83303da1aa5f/categories",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+										"menus",
+										"a673336b-366a-41fe-9a71-83303da1aa5f",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "menuId",
+											"value": "a673336b-366a-41fe-9a71-83303da1aa5f",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Entrantes",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Los mejores entrantes del mundo",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "1.ENTRANTES.2934",
+											"type": "text"
+										},
+										{
+											"key": "available",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "imageFile",
+											"type": "file",
+											"src": "/C:/Users/sjuarez/Downloads/Combo_de_Entrantes-3137.png",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/menus/a673336b-366a-41fe-9a71-83303da1aa5f/categories/f2dd9507-8d31-45b6-8a7f-bf1eb8cdbe47",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+										"menus",
+										"a673336b-366a-41fe-9a71-83303da1aa5f",
+										"categories",
+										"f2dd9507-8d31-45b6-8a7f-bf1eb8cdbe47"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Category",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "menuId",
+											"value": "a673336b-366a-41fe-9a71-83303da1aa5f",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Entrantes",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Los mejores entrantes del mundo",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "1.ENTRANTES.2934",
+											"type": "text"
+										},
+										{
+											"key": "available",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "imageFile",
+											"type": "file",
+											"src": "/C:/Users/sjuarez/Downloads/Combo_de_Entrantes-3137.png",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/menus/a673336b-366a-41fe-9a71-83303da1aa5f/categories/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+										"menus",
+										"a673336b-366a-41fe-9a71-83303da1aa5f",
+										"categories",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "menuId",
+											"value": "a673336b-366a-41fe-9a71-83303da1aa5f",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Entrantes",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Los mejores entrantes del mundo",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "1.ENTRANTES.2934",
+											"type": "text"
+										},
+										{
+											"key": "available",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "imageFile",
+											"type": "file",
+											"src": "/C:/Users/sjuarez/Downloads/Combo_de_Entrantes-3137.png",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/menus/a673336b-366a-41fe-9a71-83303da1aa5f/categories/9aedfce2-ab25-4340-b318-bac642a5d4c8",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+										"menus",
+										"a673336b-366a-41fe-9a71-83303da1aa5f",
+										"categories",
+										"9aedfce2-ab25-4340-b318-bac642a5d4c8"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "Create Product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"menuId\": \"a673336b-366a-41fe-9a71-czc\",\r\n  \"name\": \"Burger\",\r\n  \"description\": \"Los mejores nachos\",\r\n  \"code\": \"5.T4BU5RGERX.2934\",\r\n  \"available\": true,\r\n  \"price\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/menus/a673336b-366a-41fe-9a71-83303da1aa5f/products",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+										"menus",
+										"a673336b-366a-41fe-9a71-83303da1aa5f",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"menuId\": \"a673336b-366a-41fe-9a71-83303da1aa5f\",\r\n  \"name\": \"Nachos\",\r\n  \"description\": \"Los mejores nachos\",\r\n  \"code\": \"1.TEXT_MEX.2934\",\r\n  \"available\": true,\r\n  \"order\": 3,\r\n  \"price\": 12,\r\n  \"categories\": [\"4a4db83d-ecf0-40ae-9d82-3baefc1b1311\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/menus/a673336b-366a-41fe-9a71-83303da1aa5f/products/b3ee323e-6010-439f-8704-19522a92d5a5",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+										"menus",
+										"a673336b-366a-41fe-9a71-83303da1aa5f",
+										"products",
+										"b3ee323e-6010-439f-8704-19522a92d5a5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Products",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "menuId",
+											"value": "a673336b-366a-41fe-9a71-83303da1aa5f",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Entrantes",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Los mejores entrantes del mundo",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "1.ENTRANTES.2934",
+											"type": "text"
+										},
+										{
+											"key": "available",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "imageFile",
+											"type": "file",
+											"src": "/C:/Users/sjuarez/Downloads/Combo_de_Entrantes-3137.png",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/menus/a673336b-366a-41fe-9a71-83303da1aa5f/products/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+										"menus",
+										"a673336b-366a-41fe-9a71-83303da1aa5f",
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Products By Category Id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "menuId",
+											"value": "a673336b-366a-41fe-9a71-83303da1aa5f",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Entrantes",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Los mejores entrantes del mundo",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "1.ENTRANTES.2934",
+											"type": "text"
+										},
+										{
+											"key": "available",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "imageFile",
+											"type": "file",
+											"src": "/C:/Users/sjuarez/Downloads/Combo_de_Entrantes-3137.png",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/menus/a673336b-366a-41fe-9a71-83303da1aa5f/products?categoryId=4a4db83d-ecf0-40ae-9d82-3baefc1b1311",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+										"menus",
+										"a673336b-366a-41fe-9a71-83303da1aa5f",
+										"products"
+									],
+									"query": [
+										{
+											"key": "categoryId",
+											"value": "4a4db83d-ecf0-40ae-9d82-3baefc1b1311"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Products",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "menuId",
+											"value": "a673336b-366a-41fe-9a71-83303da1aa5f",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Entrantes",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Los mejores entrantes del mundo",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "1.ENTRANTES.2934",
+											"type": "text"
+										},
+										{
+											"key": "available",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "imageFile",
+											"type": "file",
+											"src": "/C:/Users/sjuarez/Downloads/Combo_de_Entrantes-3137.png",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/menus/a673336b-366a-41fe-9a71-83303da1aa5f/products/b1fe7324-60f8-4f32-a43c-9ff2fc99ba32",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"stores",
+										"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+										"menus",
+										"a673336b-366a-41fe-9a71-83303da1aa5f",
+										"products",
+										"b1fe7324-60f8-4f32-a43c-9ff2fc99ba32"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Menu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Menu1\",\r\n  \"description\": \"This is a description for Menu1\",\r\n  \"code\": \"MEN2\",\r\n  \"available\": true\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/menus",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores",
+								"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+								"menus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Menu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmOWVhYWRhMy01N2ZmLTQzYTItYjViNy1hNGIwNTU5YjhiNTMiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwib3JnYW5pemF0aW9uSWQiOiJiZGNiMmI3OC05YzRiLTRjM2YtOGE0YS1kZDMxMDg2NjJiYWYiLCJzdG9yZUlkIjoiOGVkOWZkYWQtN2VmZC00ZDI3LTgwY2MtODYzZDdjNjRkMmNiIiwiaWF0IjoxNjk5NTE2MTk5LCJleHAiOjE3ODU5MTYxOTl9.UVgjMRL-iVrP1vowH7dWgFBfb-0SpwbQjKlYPySKHZM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Men 2\",\r\n  \"description\": \"This is a description for Menu2\",\r\n  \"code\": \"MENU2\",\r\n  \"available\": true\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/stores/8ed9fdad-7efd-4d27-80cc-863d7c64d2cb/menus/a673336b-366a-41fe-9a71-83303da1aa5f",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores",
+								"8ed9fdad-7efd-4d27-80cc-863d7c64d2cb",
+								"menus",
+								"a673336b-366a-41fe-9a71-83303da1aa5f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "Il4G7sdIRlEbrXMfdxfuuJMJsabBcmm2",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "api-key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"storeId\":\"e8fe46f2-cf14-4e70-9055-9ee73cd7b0d5\",\"deliveryAddress\":{\"name\":\"S 3rd Street\",\"latitude\":\"-43.578\",\"longitude\":\"107.2578\",\"zip\":12345,\"city\":\"West Grahamshire\",\"province\":\"Wisconsin\"},\"totalOrderAmount\":26.1,\"pickupTime\":\"2024-02-20T00:41:47.757Z\",\"orderAmount\":26.1,\"type\":1,\"channel\":1,\"paymentMethodName\":0,\"products\":[{\"_id\":\"95023dd0-1ea0-4621-82dd-a2a2ca249b1d\",\"storeId\":\"e8fe46f2-cf14-4e70-9055-9ee73cd7b0d5\",\"menuId\":\"30180ed7-fb89-43a2-9949-e91b25e0d99a\",\"name\":\"Red Bull sabor Sandía\",\"quantity\":9,\"price\":2.9}],\"createdAt\":\"2023-11-10T12:40:12.000Z\",\"customer\":{\"_id\":\"8aef8468-6a9e-4834-aec7-376668d5ef69\",\"organizationId\":\"49238764-0c1e-42fc-8c32-eff420c205a8\",\"name\":\"Scot\",\"surname\":\"Ankunding\",\"email\":\"Rylee.Turcotte9@yahoo.com\",\"phone\":677123456}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Stadistics",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmZTVlZjYxMC1mZmI1LTQwNTEtYjU1Ni0yYjU4NmExYTgyMWYiLCJlbWFpbCI6ImRlbW9AZGVtby5lcyIsIm9yZ2FuaXphdGlvbklkIjoiMjFjOGQ2ZjktYzM0MC00OWU5LTllNjEtOTcwZTUwNjA4YzEwIiwic3RvcmVJZCI6ImJjMTAxZjgzLWMxMDAtNGJjOS1hMzAxLWVmOGU5YmM2M2YyMiIsImlhdCI6MTY5OTk0NTU2MywiZXhwIjoxNzg2MzQ1NTYzfQ.P_yI_t8pjhEx3_dBqZ8C5Z8dRAqFOHGaA2Lnac65IZM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders-statistics?startDate=19/11/2023&endDate=25/11/2023",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders-statistics"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "19/11/2023"
+								},
+								{
+									"key": "endDate",
+									"value": "25/11/2023"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
