@@ -56,7 +56,7 @@ export class ProductsService {
     if (productByCode && productByCode._id !== id) {
       throw new BadRequestException('productCodeAlreadyExists');
     }
-    const productToUpdate = this.createProductFactoryService.create(updateProductDto);
+    const productToUpdate = this.updateProductFactoryService.create(updateProductDto);
     const product = await this.dataService.products.updateItemInStoreAndMenu(id, productToUpdate);
     if (product && updateProductDto.imageFile) {
       await this.uploaderService.uploadFile(new FileDto({ ...updateProductDto.imageFile, fullPath: product.imageUrl }));
